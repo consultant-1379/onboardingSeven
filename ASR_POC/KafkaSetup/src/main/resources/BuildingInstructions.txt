@@ -1,0 +1,3 @@
+Creating the Tar File
+	cd onboardingSeven/kafkaSetup
+	tar -zcvf kafka_setup.tar.gz *

@@ -1,0 +1,907 @@
+[Deployment Support Tooling Versions]
+dst-version 1.15.4
+dce-version 1.16.9
+
+[Deployment Name, Group, Artifact, Version]
+deployment-name=2svc_2scp_enm_physical_test
+deployment-GAV=com.ericsson.oss.itpf.deployment.descriptions:enm-full-cdb-deployment:1.16.9
+
+[Deployment H/W Resource Profile]
+Blade: svc-1
+    Provided CPU: 32, Required CPU: 106, OverProvisionRatio: 3.3125
+    Provided Memory: 262144M, Required Memory: 202752M
+Blade: svc-2
+    Provided CPU: 32, Required CPU: 106, OverProvisionRatio: 3.3125
+    Provided Memory: 262144M, Required Memory: 202752M
+Blade: scp-1
+    Provided CPU: 32, Required CPU: 42, OverProvisionRatio: 1.3125
+    Provided Memory: 262144M, Required Memory: 210944M
+Blade: scp-2
+    Provided CPU: 32, Required CPU: 42, OverProvisionRatio: 1.3125
+    Provided Memory: 262144M, Required Memory: 210944M
+
+[Deployment Services Layout]
+svc-1: [apserv, bnsiserv, cmrules, cmserv, comecimpolicy, dchistory, dlms, emailservice, eventbasedclient, fmalarmprocessing, fmhistory, fmserv, fmx, httpd, impexpserv, ipsmserv, itservices, kpiserv, lcmserv, lvsrouter, map-service, medrouter, msap, mscm, mscmce, mscmip, msfm, mspm, mspmip, mssnmpfm, nbalarmirp, netex, nodecli, openidm, pkiraserv, pmserv, said, secserv, shmcoreserv, shmserv, solr, sps, sso, supervc, uiserv, visinamingnb, visinamingsb, wpserv]
+svc-2: [apserv, bnsiserv, cmrules, cmserv, comecimpolicy, dchistory, dlms, emailservice, eventbasedclient, fmalarmprocessing, fmhistory, fmserv, fmx, httpd, impexpserv, ipsmserv, itservices, kpiserv, lcmserv, lvsrouter, map-service, medrouter, msap, mscm, mscmce, mscmip, msfm, mspm, mspmip, mssnmpfm, nbalarmirp, netex, nodecli, openidm, pkiraserv, pmserv, said, secserv, shmcoreserv, shmserv, solr, sps, sso, supervc, uiserv, visinamingnb, visinamingsb, wpserv]
+scp-1: [amos, elementmanager, scripting, scriptinglvsrouter]
+scp-2: [amos, elementmanager, scripting, scriptinglvsrouter]
+
+[Service Resources]
+httpd:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+openidm:
+    Active=1, Standby=1, vCPU=2, Memory=4096M
+sso:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+uiserv:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+wpserv:
+    Active=2, Standby=0, vCPU=4, Memory=8192M
+eventbasedclient:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+medrouter:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+supervc:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+cmserv:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+mscm:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+mscmce:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+comecimpolicy:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+cmrules:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+netex:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+secserv:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+sps:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+pmserv:
+    Active=2, Standby=0, vCPU=4, Memory=8192M
+mspm:
+    Active=2, Standby=0, vCPU=4, Memory=8192M
+fmalarmprocessing:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+fmhistory:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+fmserv:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+msfm:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+nbalarmirp:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+visinamingnb:
+    Active=1, Standby=1, vCPU=2, Memory=4096M
+solr:
+    Active=1, Standby=1, vCPU=2, Memory=4096M
+bnsiserv:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+fmx:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+emailservice:
+    Active=1, Standby=1, vCPU=2, Memory=2048M
+dlms:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+map-service:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+impexpserv:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+shmserv:
+    Active=2, Standby=0, vCPU=4, Memory=4096M
+shmcoreserv:
+    Active=2, Standby=0, vCPU=4, Memory=4096M
+kpiserv:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+scripting:
+    Active=2, Standby=0, vCPU=16, Memory=102400M
+amos:
+    Active=2, Standby=0, vCPU=16, Memory=81920M
+elementmanager:
+    Active=2, Standby=0, vCPU=8, Memory=24576M
+visinamingsb:
+    Active=1, Standby=1, vCPU=2, Memory=4096M
+apserv:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+msap:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+lcmserv:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+ipsmserv:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+mscmip:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+pkiraserv:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+mssnmpfm:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+said:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+itservices:
+    Active=2, Standby=0, vCPU=2, Memory=2048M
+dchistory:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+nodecli:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+mspmip:
+    Active=2, Standby=0, vCPU=2, Memory=4096M
+lvsrouter:
+    Active=2, Standby=0, vCPU=2, Memory=2048M
+scriptinglvsrouter:
+    Active=2, Standby=0, vCPU=2, Memory=2048M
+
+[Service Dependencies]
+ERICenmsghttpd_CXP9031596-1.14.1 [httpd]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        ERICidentitymgmt_CXP9030739-1.15.15
+        ERICsystemsecurityconfiguration_CXP9032530-1.1.6
+        ERICuserprofilemenu_CXP9031485-1.3.1
+        
+ERICenmsgopenidm_CXP9031666-1.15.1 [openidm]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgsso_CXP9031582-1.7.1 [sso]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsguiservice_CXP9031574-1.9.2 [uiserv]:
+    Model dependencies:
+        ERICpibmodel_CXP9030858-2.3.2
+        ERICpsmodels_CXP9030922-1.6.3
+    WebApps dependencies:
+        ERICapplib_CXP9032593-1.3.3
+        ERIClauncher_CXP9030204-1.17.2
+        ERIClogviewer_CXP9030285-1.14.14
+        
+ERICenmsgwebpushservice_CXP9031757-1.12.3 [wpserv]:
+    Model dependencies:
+        ERICwebpushmodel_CXP9031621-1.5.1
+    WebApps dependencies:
+        
+ERICenmsgeventbasedclient_CXP9031576-1.11.1 [eventbasedclient]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgmedrouter_CXP9031575-1.10.1 [medrouter]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgsupervisionclient_CXP9031577-1.9.1 [supervc]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgcmservice_CXP9031573-1.12.3 [cmserv]:
+    Model dependencies:
+        ERICbatchmodel_CXP9031518-1.13.4
+        ERICclialiasmodel_CXP9031874-1.3.2
+        ERICcmparametersmodel_CXP9032669-1.1.3
+        ERICdpsconfmodels_CXP9030872-1.4.3
+        ERIChcservicemodel_CXP9032088-1.7.1
+        ERICmedcoreapichannelmodels_CXP9030899-1.1.1
+        ERICmedsdkeventmodels_CXP9030898-1.2.1
+        ERICsshhandlerflowconfig_CXP9031056-1.3.7
+        ERICupgradeindmodel_CXP9031718-1.2.11
+    WebApps dependencies:
+        ERICcli_CXP9030319-1.21.20
+        ERIChealthcheckui_CXP9032092-1.1.1
+        ERICupgradeindserviceui_CXP9031719-1.2.2
+        
+ERICenmsgmscm_CXP9031578-1.14.5 [mscm]:
+    Model dependencies:
+        ERICaddnodebootstrapmodels_CXP9031420-1.10.2-SNAPSHOT
+        ERICauthenticationfailureevent_CXP9032066-1.0.2
+        ERICauthenticationfailureflow_CXP9032063-1.2.1
+        ERICauthenticationfailurehandlermodel_CXP9032064-1.4.1
+        ERICcbacmnetconfhandlermodel_CXP9031222-1.4.3
+        ERICcbacmsyncnodeflowmodels_CXP9031502-1.4.1
+        ERICcbacmsyncnodehandlermodel_CXP9031501-1.2.3
+        ERICcbaconfigurationmodel_CXP9031361-1.6.2
+        ERICcbanetconfconnecthandlermodel_CXP9031346-1.1.1
+        ERICcbanetconfdisconnecthandlermodel_CXP9031348-1.2.1
+        ERICcbanetconfwritecontrollermodel_CXP9032025-1.6.3
+        ERICcbanodeevents_CXP9031762-1.4.2-SNAPSHOT
+        ERICcmmediationcommonmodels_CXP9032462-1.1.2
+        ERICcomcmheartbeatsupervisionflow_CXP9031584-1.2.1
+        ERICcomecimcmdeltasyncflowmodel_CXP9031759-1.2.6
+        ERICcomecimcmdeltasynchandlermodel_CXP9031760-1.3.7
+        ERICcomecimcmfiltergethandlermodel_CXP9032146-1.5.1
+        ERICcomecimcmheartbeatsuphandlermodel_CXP9031587-1.8.6
+        ERICcomecimcmpreparesubshandlermodel_CXP9032033-1.6.1
+        ERICcomecimcmsubscriptionhandlermodel_CXP9031598-1.6.2
+        ERICcomecimcreatesubscriptionflowmodel_CXP9031676-1.5.3
+        ERICcomecimdeletesubscriptionflowmodel_CXP9031677-1.3.2
+        ERICcomecimdeletesubshandlermodel_CXP9031684-1.4.1
+        ERICcomecimnotifsupervisionhandlermodel_CXP9031678-1.9.6
+        ERICcommodelsr5.0_CXP9031865-2.3.1
+        ERICcommodelsr5.1_CXP9032416-1.4.1
+        ERICcommonsoftwaresynchandlermodel_CXP9032508-1.6.2
+        ERICcppsoftwaresyncflowmodel_CXP9032510-1.6.2
+        ERICcppsoftwaresynchandlermodel_CXP9032507-1.6.2
+        ERICecimcmheartbeatsupervisionflow_CXP9031586-1.2.1
+        ERICecimnotifheartbeathandlermodel_CXP9031703-1.2.4
+        ERICecimnotificationhandlingflowmodel_CXP9031675-1.4.1
+        ERICer6000cimodel_CXP9031842-1.6.2
+        ERICer6000nodemodelcommon_CXP9032077-1.1.2
+        ERICer6274nodemodelcommon_CXP9032483-1.2.2
+        ERICer6672nodemodelcommon_CXP9032478-1.2.2
+        ERICer6675nodemodelcommon_CXP9032484-1.2.2
+        ERICerbshandlermodels_CXP9032091-1.4.1
+        ERICerbshchandlerflows_CXP9032090-1.4.1
+        ERICerbsmediationconfigurationmodel_CXP9030429-1.7.1
+        ERICfmmediationeventmodel_CXP9030672-1.10.3-SNAPSHOT
+        ERICftphandlermodel_CXP9030847-1.20.5
+        ERICgenericstartsynceventmodel_CXP9032679-1.1.1
+        ERICgeolocationmodel_CXP9031964-1.2.1
+        ERIChcservicemodel_CXP9032088-1.7.1
+        ERICinbounddpshandlermodel_CXP9030733-1.3.2
+        ERICmediationcomconnectivityinfomodel_CXP9031276-1.6.1
+        ERICmediationerbsnodemodel13a_CXP9030984-4.2.2
+        ERICmediationerbsnodemodel13b_CXP9030985-4.2.2
+        ERICmediationerbsnodemodel14a_CXP9030986-5.2.1
+        ERICmediationerbsnodemodel14b_CXP9030987-5.3.1
+        ERICmediationerbsnodemodel15b_CXP9031712-4.3.1
+        ERICmediationerbsnodemodel16a_CXP9032349-2.3.1
+        ERICmediationerbsnodemodel16b_CXP9032523-2.4.2
+        ERICmediationerbsnodemodelcommon_CXP9032151-1.4.1
+        ERICmediationmgwnodemodel15b_CXP9032455-1.2.2
+        ERICmediationmgwnodemodelcommon_CXP9032434-1.0.4
+        ERICmediationservicesmodel_CXP9031296-1.4.1
+        ERICmediationsgsnmmenodemodelcommon_CXP9032153-1.6.1
+        ERICminilinkindoorcimodel_CXP9032238-1.3.1
+        ERICminilinkindoorcmmediationconf_CXP9032239-1.1.1
+        ERICminilinkindoornodemodelcommon_CXP9032236-1.2.1
+        ERICminilinkoutdoorcimodel_CXP9032242-1.0.9
+        ERICminilinkoutdoorcmmedconfig_CXP9032243-1.0.6
+        ERICminilinkoutdoornodemodelcom_CXP9032240-1.1.1
+        ERICmocihandlermodel_CXP9030422-1.3.1
+        ERICmsrbsv2networkresourcemodel15b_CXP9031504-1.11.2
+        ERICmsrbsv2networkresourcemodel16a_CXP9032375-1.7.2
+        ERICmsrbsv2nodemodelcommon_CXP9032227-1.5.2
+        ERICnetconfinboundconfighandlermodel_CXP9032317-1.1.1
+        ERICnetconfperiodictaskhandlermodel_CXP9031879-1.0.2
+        ERICnetconfsessionbuilderhandmodel_CXP9032079-1.6.1
+        ERICnetconfsessiondestroyerhandmodel_CXP9032256-1.1.1
+        ERICnetconfsessionreleaserhandmodel_CXP9032255-1.0.1
+        ERICnetconfsessionsubshandlermodel_CXP9031878-1.0.3
+        ERICnetworkconnectorconfigmodels_CXP9031370-1.7.1
+        ERICnetworkelementcmdefmodel_CXP9031291-1.6.2
+        ERICnetworkelementdefmodel_CXP9031290-3.2.1
+        ERICnodesecuritymodel_CXP9030968-1.9.3
+        ERICnotificationcachedefinitionmodels_CXP9032208-1.1.1
+        ERICnotificationhandlingflow_CXP9031202-1.2.24
+        ERICnotificationreceiverhandlermodel_CXP9031203-1.1.6
+        ERICosstopmodel_CXP9031292-2.2.2
+        ERICpibmodel_CXP9030858-2.3.2
+        ERICradionodecmreadnodeflow_CXP9032143-1.4.1
+        ERICradionodemediationconfiguration_CXP9031903-1.7.1
+        ERICradionodewritenodeflowmodels_CXP9032354-1.6.1
+        ERICreadnonpersistedattributesflow_CXP9031585-1.4.1
+        ERICsgsncreatesubsflowmodel_CXP9032000-1.5.2
+        ERICsgsndeletesubsflowmodel_CXP9032037-1.4.2
+        ERICsgsnmmecmreadnodeflow_CXP9032144-1.4.1
+        ERICsgsnmmecommandhandlermodel_CXP9032061-1.2.2
+        ERICsgsnmmemedconfiguration_CXP9031615-1.7.1
+        ERICsgsnmmenetconfpreconnhandmodel_CXP9031947-1.4.1
+        ERICsgsnmmenetworkresourcemodel14b_CXP9031369-2.7.2
+        ERICsgsnmmenetworkresourcemodel15a_CXP9031713-2.8.2
+        ERICsgsnmmenetworkresourcemodel15b_CXP9032044-2.7.2
+        ERICsgsnmmesecuritymediationconfig_CXP9032057-1.1.1
+        ERICsgsnmmesecuritysshcommandflow_CXP9032060-1.2.1
+        ERICsgsnmmewritenodeflowmodels_CXP9032017-1.6.1
+        ERICshmmodels_CXP9031349-1.19.2
+        ERICsoftwaresynceventmodel_CXP9032514-1.5.5
+        ERICsshcommandhandlermodel_CXP9032058-1.1.1
+        ERICsshcredentialsmanagerhandlermodel_CXP9032067-1.7.1
+        ERICsshhandlerflow_CXP9031030-1.4.2
+        ERICsshhandlerflowconfig_CXP9031056-1.3.7
+        ERICsshhandlermodel_CXP9031029-1.3.7
+        ERICsshtransportconnecthandlermodel_CXP9032168-1.7.2
+        ERICsubscriptioncreationhandlermodel_CXP9031210-1.3.24
+        ERICsubscriptionflow_CXP9031209-1.3.1
+        ERICsubscriptionvalidationflow_CXP9031214-1.4.1
+        ERICsubscriptionvalidationhandlermodel_CXP9031215-1.3.24
+        ERICsyncnodeevent_CXP9031195-1.5.3
+        ERICsyncnodeflowmodel_CXP9030696-1.4.1
+        ERICsyncnodemocihandlermodel_CXP9030741-1.3.2
+        ERICupdateossmodelidflow_CXP9032683-1.0.9
+        ERICupdateossmodelidhandlermodel_CXP9032681-1.1.4
+        ERICupgradeindcomecimretrmimhrsmodel_CXP9032276-1.4.2
+        ERICupgradeindcppretrievemimflow_CXP9031724-1.3.7
+        ERICupgradeindcppretrmimhandlersmodel_CXP9031766-1.7.2
+        ERICupgradeindecimretrievemimflow_CXP9031728-1.4.3
+        ERICupgradeindecimretrmhandlersmodel_CXP9031768-1.4.4
+        ERICupgradeindhttpfilehandlermodel_CXP9031770-1.4.2
+        ERICwritenodeflowmodel_CXP9030945-1.3.3
+    WebApps dependencies:
+        
+ERICenmsgcomecimmscm_CXP9032233-1.7.2 [mscmce]:
+    Model dependencies:
+        ERICauthenticationfailureevent_CXP9032066-1.0.2
+        ERICauthenticationfailureflow_CXP9032063-1.2.1
+        ERICauthenticationfailurehandlermodel_CXP9032064-1.4.1
+        ERICcbacmnetconfhandlermodel_CXP9031222-1.4.3
+        ERICcbacmsyncnodeflowmodels_CXP9031502-1.4.1
+        ERICcbacmsyncnodehandlermodel_CXP9031501-1.2.3
+        ERICcbaconfigurationmodel_CXP9031361-1.6.2
+        ERICcbanetconfconnecthandlermodel_CXP9031346-1.1.1
+        ERICcbanetconfdisconnecthandlermodel_CXP9031348-1.2.1
+        ERICcbanetconfwritecontrollermodel_CXP9032025-1.6.3
+        ERICcbanodeevents_CXP9031762-1.4.2-SNAPSHOT
+        ERICcomcmheartbeatsupervisionflow_CXP9031584-1.2.1
+        ERICcomecimcmdeltasyncflowmodel_CXP9031759-1.2.6
+        ERICcomecimcmdeltasynchandlermodel_CXP9031760-1.3.7
+        ERICcomecimcmfiltergethandlermodel_CXP9032146-1.5.1
+        ERICcomecimcmheartbeatsuphandlermodel_CXP9031587-1.8.6
+        ERICcomecimcmpreparesubshandlermodel_CXP9032033-1.6.1
+        ERICcomecimcmsubscriptionhandlermodel_CXP9031598-1.6.2
+        ERICcomecimcreatesubscriptionflowmodel_CXP9031676-1.5.3
+        ERICcomecimdeletesubscriptionflowmodel_CXP9031677-1.3.2
+        ERICcomecimdeletesubshandlermodel_CXP9031684-1.4.1
+        ERICcomecimnotifsupervisionhandlermodel_CXP9031678-1.9.6
+        ERICcommodelsr5.0_CXP9031865-2.3.1
+        ERICcommodelsr5.1_CXP9032416-1.4.1
+        ERICcommodelsr60_CXP9032536-1.1.5
+        ERICecimcmheartbeatsupervisionflow_CXP9031586-1.2.1
+        ERICecimnotifheartbeathandlermodel_CXP9031703-1.2.4
+        ERICecimnotificationhandlingflowmodel_CXP9031675-1.4.1
+        ERICfmmediationeventmodel_CXP9030672-1.10.3-SNAPSHOT
+        ERICftphandlermodel_CXP9030847-1.20.5
+        ERICmediationcomconnectivityinfomodel_CXP9031276-1.6.1
+        ERICmediationsgsnmmenodemodel16a_CXP9032284-1.3.1
+        ERICmediationsgsnmmenodemodelcommon_CXP9032153-1.6.1
+        ERICmsrbsv2networkresourcemodel15b_CXP9031504-1.11.2
+        ERICmsrbsv2networkresourcemodel16a_CXP9032375-1.7.2
+        ERICmsrbsv2nodemodelcommon_CXP9032227-1.5.2
+        ERICnetconfinboundconfighandlermodel_CXP9032317-1.1.1
+        ERICnetconfperiodictaskhandlermodel_CXP9031879-1.0.2
+        ERICnetconfsessionbuilderhandmodel_CXP9032079-1.6.1
+        ERICnetconfsessiondestroyerhandmodel_CXP9032256-1.1.1
+        ERICnetconfsessionreleaserhandmodel_CXP9032255-1.0.1
+        ERICnetconfsessionsubshandlermodel_CXP9031878-1.0.3
+        ERICnodesecuritymodel_CXP9030968-1.9.3
+        ERICnotificationcachedefinitionmodels_CXP9032208-1.1.1
+        ERICosstopmodel_CXP9031292-2.2.2
+        ERICradionodecmreadnodeflow_CXP9032143-1.4.1
+        ERICradionodemediationconfiguration_CXP9031903-1.7.1
+        ERICradionodenodemodel16b_CXP9032534-1.4.6
+        ERICradionodewritenodeflowmodels_CXP9032354-1.6.1
+        ERICsgsncreatesubsflowmodel_CXP9032000-1.5.2
+        ERICsgsndeletesubsflowmodel_CXP9032037-1.4.2
+        ERICsgsnmmecmreadnodeflow_CXP9032144-1.4.1
+        ERICsgsnmmecommandhandlermodel_CXP9032061-1.2.2
+        ERICsgsnmmemedconfiguration_CXP9031615-1.7.1
+        ERICsgsnmmenetconfpreconnhandmodel_CXP9031947-1.4.1
+        ERICsgsnmmenetworkresourcemodel14b_CXP9031369-2.7.2
+        ERICsgsnmmenetworkresourcemodel15a_CXP9031713-2.8.2
+        ERICsgsnmmenetworkresourcemodel15b_CXP9032044-2.7.2
+        ERICsgsnmmesecuritymediationconfig_CXP9032057-1.1.1
+        ERICsgsnmmesecuritysshcommandflow_CXP9032060-1.2.1
+        ERICsgsnmmewritenodeflowmodels_CXP9032017-1.6.1
+        ERICsshcommandhandlermodel_CXP9032058-1.1.1
+        ERICsshhandlermodel_CXP9031029-1.3.7
+        ERICtlscredentialsmanagerhandlermodel_CXP9032281-1.3.3
+        ERICupgradeindcomecimretrmimhrsmodel_CXP9032276-1.4.2
+        ERICupgradeindecimretrievemimflow_CXP9031728-1.4.3
+        ERICupgradeindecimretrmhandlersmodel_CXP9031768-1.4.4
+    WebApps dependencies:
+        
+ERICenmsgcomecimpolicy_CXP9032231-1.8.1 [comecimpolicy]:
+    Model dependencies:
+        ERICcmrouterpolicymodel_CXP9032342-1.3.1
+        ERICcomecimcmrouterpolicymodel_CXP9032613-1.1.1
+        ERICer6000routerpolicymodel_CXP9032576-1.0.1
+        ERICnetworkconnectorconfigmodels_CXP9031370-1.7.1
+        ERICsyncnodeevent_CXP9031195-1.5.3
+    WebApps dependencies:
+        
+ERICenmsgcmrules_CXP9032502-1.0.14 [cmrules]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgnetworkexplorer_CXP9031630-1.10.2 [netex]:
+    Model dependencies:
+        ERICnetworkexplorermodels_CXP9030552-1.6.3
+    WebApps dependencies:
+        ERICnetworkexplorer_CXP9030473-1.25.30
+        ERICnetworkexplorerlib_CXP9031008-1.7.1
+        ERICtopologybrowser_CXP9030753-1.14.7
+        
+ERICenmsgsecurityservice_CXP9031732-1.14.5 [secserv]:
+    Model dependencies:
+        ERICcomaamodel_CXP9032020-1.2.14
+        ERICfmprocessedeventmodel_CXP9030673-1.15.1
+        ERICgenericidentitymgmtmodel_CXP9032610-1.1.5
+        ERICmedsdkeventmodels_CXP9030898-1.2.1
+        ERICnodesecuritymodel_CXP9030968-1.9.3
+        ERICpibmodel_CXP9030858-2.3.2
+        ERICpolicyenginemodel_CXP9031944-1.6.1
+        ERICsmrsservicemodel_CXP9030970-1.14.3
+        ERICssoutilitiesmodel_CXP9032644-1.1.2
+        ERICtargethandlersmodels_CXP9032666-1.1.7
+        ERICwfsmodel_CXP9031037-1.2.2
+    WebApps dependencies:
+        
+ERICenmsgsps_CXP9031956-1.11.3 [sps]:
+    Model dependencies:
+        ERICcredentialmanagerconfigmodel_CXP9032685-1.0.4
+        ERICpibmodel_CXP9030858-2.3.2
+        ERICpkicdpsmodel_CXP9032532-1.3.1
+        ERICpkicoremodel_CXP9032529-1.2.3
+        ERICpkimanagerconfigmodel_CXP9032043-1.6.2
+        ERICpkiracmpmodel_CXP9032010-1.5.1
+    WebApps dependencies:
+        
+ERICenmsgpmservice_CXP9031580-1.11.2 [pmserv]:
+    Model dependencies:
+        ERICmedsdkeventmodels_CXP9030898-1.2.1
+        ERICnetworkelementdefmodel_CXP9031290-3.2.1
+        ERICpmfunctionmodel_CXP9031819-1.5.1
+    WebApps dependencies:
+        
+ERICenmsgmspm_CXP9031581-1.12.3 [mspm]:
+    Model dependencies:
+        ERICcbacmnetconfhandlermodel_CXP9031222-1.4.3
+        ERICcbaconfigurationmodel_CXP9031361-1.6.2
+        ERICcbanetconfconnecthandlermodel_CXP9031346-1.1.1
+        ERICcbanetconfdisconnecthandlermodel_CXP9031348-1.2.1
+        ERICcomecimpmasyncoperhandlermodel_CXP9032166-1.3.1
+        ERICcomecimpmcompleteoperationsflow_CXP9032031-1.5.3
+        ERICcomecimpmevents_CXP9032379-1.0.2
+        ERICcomecimpmfilecollectionflow_CXP9031984-1.8.1
+        ERICcomecimpmfilecollectsetuphandmodel_CXP9031985-1.6.2
+        ERICcomecimpmoperationsflow_CXP9032030-1.7.2
+        ERICcomecimpmoperhandlermodel_CXP9032218-1.3.2
+        ERICcomecimpmpollingflow_CXP9031690-1.7.1
+        ERICcomecimpmpollinghandlermodel_CXP9031691-1.4.2
+        ERICdpsdataretrievalsetuphandlermodel_CXP9032388-1.2.1
+        ERICecimpmeventsmoperationhandlrmodel_CXP9032126-1.2.1
+        ERICecimpmoperationsflow_CXP9031687-1.9.3
+        ERICecimpmoperationshandlermodel_CXP9031688-1.3.7
+        ERICerbscpppmiccollectionhandlersmodel_CXP9032391-1.3.2
+        ERICerbspmhandlersmodel_CXP9032686-1.0.5
+        ERICftphandlermodel_CXP9030847-1.20.5
+        ERICmediationcomconnectivityinfomodel_CXP9031276-1.6.1
+        ERICmediationconfigurationmodel_CXP9030610-1.24.3
+        ERICmediationerbsnodemodel13a_CXP9030984-4.2.2
+        ERICmediationerbsnodemodel13b_CXP9030985-4.2.2
+        ERICmediationerbsnodemodel14a_CXP9030986-5.2.1
+        ERICmediationerbsnodemodel14b_CXP9030987-5.3.1
+        ERICmediationerbsnodemodelcommon_CXP9032151-1.4.1
+        ERICmediationsgsnmmenodemodelcommon_CXP9032153-1.6.1
+        ERICnetconfinboundconfighandlermodel_CXP9032317-1.1.1
+        ERICnetconfperiodictaskhandlermodel_CXP9031879-1.0.2
+        ERICnetconfsessionbuilderhandmodel_CXP9032079-1.6.1
+        ERICnetconfsessiondestroyerhandmodel_CXP9032256-1.1.1
+        ERICnetconfsessionreleaserhandmodel_CXP9032255-1.0.1
+        ERICnetconfsessionsubshandlermodel_CXP9031878-1.0.3
+        ERICnetworkelementdefmodel_CXP9031290-3.2.1
+        ERICosstopmodel_CXP9031292-2.2.2
+        ERICpibmodel_CXP9030858-2.3.2
+        ERICpmiccelltraceinitsetuphndlrmodels_CXP9032398-1.2.1
+        ERICpmiccommonscannerhandlermodel_CXP9032590-1.2.1
+        ERICpmiccorbahandlermodel_CXP9030591-1.22.3
+        ERICpmicdpshandlermodel_CXP9030598-1.21.5
+        ERICpmicebminitiationhandlermodel_CXP9032475-1.2.1
+        ERICpmicfilecollection_CXP9030837-1.22.3
+        ERICpmicfilecollectionhandlersmodels_CXP9030845-1.21.4
+        ERICpmicinitiationflowmodel_CXP9030608-1.26.2
+        ERICpmicmodel_CXP9030403-1.33.19
+        ERICpmicpredefstatsinitsetuphndlrmodels_CXP9032399-1.2.1
+        ERICpmicstatsinitsetuphndlrsmodels_CXP9032397-1.2.1
+        ERICradionodepmmediationconfigmodel_CXP9032029-1.4.2
+        ERICsgsnmmemedconfiguration_CXP9031615-1.7.1
+        ERICsgsnmmenetconfpreconnhandmodel_CXP9031947-1.4.1
+        ERICsgsnmmenetworkresourcemodel14b_CXP9031369-2.7.2
+        ERICsgsnmmenetworkresourcemodel15a_CXP9031713-2.8.2
+        ERICsgsnmmepmfilecollectionflow_CXP9032283-1.6.2
+        ERICsgsnmmepmhandlersmodel_CXP9032611-1.1.2
+        ERICsgsnmmepmmediationconfigmodel_CXP9031696-1.7.1
+        ERICsgsnmmepmpollingflow_CXP9032032-1.6.3
+        ERICsshcredentialsmanagerhandlermodel_CXP9032067-1.7.1
+        ERICsshtransportconnecthandlermodel_CXP9032168-1.7.2
+        ERICtlscredentialsmanagerhandlermodel_CXP9032281-1.3.3
+    WebApps dependencies:
+        
+ERICenmsgfmalarmprocessing_CXP9032200-1.7.3 [fmalarmprocessing]:
+    Model dependencies:
+        ERICalarmpersistencemodel_CXP9030634-1.12.1
+        ERICfmfmxmodel_CXP9031623-1.3.1
+        ERICfmmediationeventmodel_CXP9030672-1.10.3-SNAPSHOT
+        ERICfmprocessedeventmodel_CXP9030673-1.15.1
+        ERICpibmodel_CXP9030858-2.3.2
+    WebApps dependencies:
+        
+ERICenmsgfmhistory_CXP9032204-1.7.4 [fmhistory]:
+    Model dependencies:
+        ERICalarmpersistencemodel_CXP9030634-1.12.1
+        ERICfmmediationeventmodel_CXP9030672-1.10.3-SNAPSHOT
+        ERICfmprocessedeventmodel_CXP9030673-1.15.1
+        ERICpibmodel_CXP9030858-2.3.2
+    WebApps dependencies:
+        
+ERICenmsgfmservice_CXP9031625-1.13.3 [fmserv]:
+    Model dependencies:
+        ERICalarmpersistencemodel_CXP9030634-1.12.1
+        ERICfmfmxmodel_CXP9031623-1.3.1
+        ERICfmmediationeventmodel_CXP9030672-1.10.3-SNAPSHOT
+        ERICfmprocessedeventmodel_CXP9030673-1.15.1
+        ERICpibmodel_CXP9030858-2.3.2
+    WebApps dependencies:
+        ERICalarmcontroldisplaygui_CXP9031026-1.18.20
+        ERICalarmseveritysummary_CXP9032372-1.6.1
+        ERICalarmtyperanking_CXP9032352-1.6.1
+        ERICalarmtypesummary_CXP9032346-1.6.2
+        ERICnoderankingbyalarmcount_CXP9032076-1.6.3
+        
+ERICenmsgmsfm_CXP9031660-1.12.4 [msfm]:
+    Model dependencies:
+        ERICalarmpersistencemodel_CXP9030634-1.12.1
+        ERICcbacmnetconfhandlermodel_CXP9031222-1.4.3
+        ERICcbaconfigurationmodel_CXP9031361-1.6.2
+        ERICcbanetconfconnecthandlermodel_CXP9031346-1.1.1
+        ERICcbanetconfdisconnecthandlermodel_CXP9031348-1.2.1
+        ERICcppalarmsupervisionflowmodel_CXP9030679-1.4.5
+        ERICcppalarmsupervisionhandlermodel_CXP9030680-1.5.3
+        ERICfmcorbamediationconfig_CXP9030689-1.0.71
+        ERICfmmediationeventmodel_CXP9030672-1.10.3-SNAPSHOT
+        ERICmedcoreapichannelmodels_CXP9030899-1.1.1
+        ERICmedsdkeventmodels_CXP9030898-1.2.1
+        ERICnetconfsessionbuilderhandmodel_CXP9032079-1.6.1
+        ERICnetconfsessiondestroyerhandmodel_CXP9032256-1.1.1
+        ERICpibmodel_CXP9030858-2.3.2
+    WebApps dependencies:
+        
+ERICenmsgnbalarmirpagentcorba_CXP9031835-1.14.5 [nbalarmirp]:
+    Model dependencies:
+        ERICcorbainterfacemodel_CXP9031151-1.6.4
+        ERICfmprocessedeventmodel_CXP9030673-1.15.1
+        ERICpibmodel_CXP9030858-2.3.2
+    WebApps dependencies:
+        
+ERICenmsgvisinamingnb_CXP9031663-1.4.1 [visinamingnb]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgsolr_CXP9031962-1.5.2 [solr]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgnbibnsifm_CXP9031833-1.10.5 [bnsiserv]:
+    Model dependencies:
+        ERICfmprocessedeventmodel_CXP9030673-1.1.19
+    WebApps dependencies:
+        
+ERICenmsgfmx_CXP9031866-1.7.2 [fmx]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        ERICfmxgui_CXP9032509-1.5.3
+        
+ERICenmsgemailservice_CXP9032539-1.2.3 [emailservice]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgdlms_CXP9032618-1.2.1 [dlms]:
+    Model dependencies:
+        ERICdlmsconfigurationmodel_CXP9032634-1.0.1
+        ERICfmprocessedeventmodel_CXP9030673-1.15.1
+        ERICpibmodel_CXP9030858-2.3.2
+        ERICsolrloadschedulemodel_CXP9031934-1.1.6
+    WebApps dependencies:
+        
+ERICenmsgmapservice_CXP9031847-1.4.1 [map-service]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgimportexportservice_CXP9031624-1.13.3 [impexpserv]:
+    Model dependencies:
+        ERICbatchmodel_CXP9031518-1.13.4
+        ERICcmeventsservicemodel_CXP9032699-1.3.3
+        ERICeniqtopologyservicemodel_CXP9031298-1.18.3
+        ERICimportbatchmodel_CXP9032657-1.0.5
+        ERICpredefinedfiltermodel_CXP9032383-1.2.1
+    WebApps dependencies:
+        
+ERICenmsgshmservice_CXP9031659-1.16.3 [shmserv]:
+    Model dependencies:
+        ERICcppinventoryflowmodel_CXP9030622-1.9.5
+        ERICcppinventorymediationconfigmodel_CXP9030620-1.11.3
+        ERICcppinventorymodel_CXP9030632-1.11.1
+        ERICdpsconfmodels_CXP9030872-1.4.3
+        ERICinventoryhandlermodel_CXP9031350-1.8.6
+        ERIClicensekeyinfomodel_CXP9031107-1.10.2
+        ERICnetworkexplorermodels_CXP9030552-1.6.3
+        ERICpibmodel_CXP9030858-2.3.2
+        ERICshmfunctionmodel_CXP9031388-1.9.2
+        ERICshmmodels_CXP9031349-1.19.2
+        ERICupgradepackagemodel_CXP9030915-1.11.1
+    WebApps dependencies:
+        ERICshmui_CXP9030799-1.23.8
+        
+ERICenmsgshmcoreservice_CXP9032655-1.1.2 [shmcoreserv]:
+    Model dependencies:
+        ERICdpsconfmodels_CXP9030872-1.4.3
+        ERICnetworkexplorermodels_CXP9030552-1.6.3
+        ERICpibmodel_CXP9030858-2.3.2
+        ERICshmfunctionmodel_CXP9031388-1.9.2
+        ERICshmjobmodel_CXP9031092-1.11.4
+        ERICshmmodelextension_CXP9031197-1.21.1
+        ERICshmmodels_CXP9031349-1.19.2
+        ERICwfsmodel_CXP9031037-1.2.2
+    WebApps dependencies:
+        ERICshmui_CXP9030799-1.23.8
+        
+ERICenmsgkpiservice_CXP9031626-1.13.2 [kpiserv]:
+    Model dependencies:
+        ERICkpicalculationflowmodel_CXP9031710-1.11.2
+    WebApps dependencies:
+        ERICkpimanagementapp_CXP9031735-1.15.9
+        ERICmultinodehealthmonitorapp_CXP9031838-1.15.6
+        ERICnetworkexplorerlib_CXP9031008-1.7.1
+        ERICnetworkhealthmonitorclient_CXP9031434-2.14.3
+        ERICnetworkscopewidget_CXP9032438-1.4.7
+        ERICnetworkstatuswidget_CXP9032560-1.3.2
+        ERICnhmwidgets_CXP9031824-1.9.1
+        ERICnodemonitorapp_CXP9031781-1.12.1
+        ERICnoderankingbyalarmcount_CXP9032076-1.6.3
+        
+ERICenmsggeneralscripting_CXP9031992-1.11.1 [scripting]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgamos_CXP9031904-1.10.1 [amos]:
+    Model dependencies:
+        ERICamosconfiguration_CXP9032257-1.5.3
+    WebApps dependencies:
+        
+ERICenmsgelementmanager_CXP9031905-1.4.2 [elementmanager]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgvisinamingsb_CXP9031674-1.7.5 [visinamingsb]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgautoprovisioning_CXP9031667-1.11.3 [apserv]:
+    Model dependencies:
+        ERICapdatacore_CXP9030534-1.30.10-SNAPSHOT
+        ERICapdatamacro_CXP9030537-1.31.8
+        ERICapmodelecim_CXP9032498-1.6.9-SNAPSHOT
+        ERICnodediscoveryflowmodel_CXP9031392-1.15.2-SNAPSHOT
+        ERICnodediscoveryhandlersmodel_CXP9031395-1.15.2-SNAPSHOT
+    WebApps dependencies:
+        
+ERICenmsgmsap_CXP9032313-1.7.3 [msap]:
+    Model dependencies:
+        ERICapmediationmodel_CXP9032337-1.0.2
+        ERICmediationerbsnodemodel13a_CXP9030984-4.2.2
+        ERICmediationerbsnodemodel13b_CXP9030985-4.2.2
+        ERICmediationerbsnodemodelcommon_CXP9032151-1.4.1
+        ERICmediationservicesmodel_CXP9031296-1.4.1
+        ERICmediationsgsnmmenodemodelcommon_CXP9032153-1.6.1
+        ERICnetworkelementdefmodel_CXP9031290-3.2.1
+        ERICnodediscoveryflowmodel_CXP9031392-1.15.2-SNAPSHOT
+        ERICnodediscoveryhandlersmodel_CXP9031395-1.15.2-SNAPSHOT
+        ERICsgsnmmenetworkresourcemodel14b_CXP9031369-2.7.2
+        ERICsgsnmmenetworkresourcemodel15a_CXP9031713-2.8.2
+        ERICsgsnmmenetworkresourcemodel15b_CXP9032044-2.7.2
+        ERICsyncnodeevent_CXP9031195-1.5.3
+    WebApps dependencies:
+        
+ERICenmsglcmservice_CXP9031662-1.9.3 [lcmserv]:
+    Model dependencies:
+        ERIClicensecontrolmonitoringmodel_CXP9031453-1.10.6
+    WebApps dependencies:
+        
+ERICenmsgservicemanagement_CXP9031850-1.7.1 [ipsmserv]:
+    Model dependencies:
+        ERICactivityservicemodel_CXP9031444-3.13.1
+        ERICdpsconfmodels_CXP9030872-1.4.3
+        ERICer6000cimodel_CXP9031842-1.6.2
+        ERICer6000nodemodelcommon_CXP9032077-1.1.2
+        ERICipnediscoverymodel_CXP9032136-1.6.10
+        ERICipsmservicedefinitionmodel_CXP9031991-3.2.38
+        ERICipsmservicemanagermodel_CXP9031993-3.2.38
+        ERICipsmtemplatemanagermodel_CXP9031442-1.6.15
+        ERICmediationservicesmodel_CXP9031296-1.4.1
+    WebApps dependencies:
+        ERICipnediscoveryui_CXP9032137-1.6.5
+        ERICipsmcommonui_CXP9032160-1.4.8
+        ERICipsmservicebuilderui_CXP9031983-1.5.26
+        ERICipsmservicedefinitionui_CXP9031978-1.4.21
+        ERICipsmtemplatemanagerui_CXP9031443-1.6.31
+        
+ERICenmsgmscmip_CXP9032001-1.8.4 [mscmip]:
+    Model dependencies:
+        ERICcbacmnetconfhandlermodel_CXP9031222-1.4.3
+        ERICcbaconfigurationmodel_CXP9031361-1.6.2
+        ERICcbanetconfconnecthandlermodel_CXP9031346-1.1.1
+        ERICcbanetconfdisconnecthandlermodel_CXP9031348-1.2.1
+        ERICcbanetconfwritecontrollermodel_CXP9032025-1.6.3
+        ERICcomecimcmdeltasynchandlermodel_CXP9031760-1.3.7
+        ERICcomecimcmfiltergethandlermodel_CXP9032146-1.5.1
+        ERICcomecimcmsubscriptionhandlermodel_CXP9031598-1.6.2
+        ERICcomecimdeletesubshandlermodel_CXP9031684-1.4.1
+        ERICcomecimnotifsupervisionhandlermodel_CXP9031678-1.9.6
+        ERICecimnotifheartbeathandlermodel_CXP9031703-1.2.4
+        ERICer6000cimodel_CXP9031842-1.6.2
+        ERICer6000configurationmodel_CXP9032374-1.2.1
+        ERICer6000mediationconfiguration_CXP9031843-1.8.1
+        ERICer6000nodemodel16a_CXP9032075-1.3.1
+        ERICer6000nodemodelcommon_CXP9032077-1.1.2
+        ERICer6000syncnodeflow_CXP9032360-1.5.2
+        ERICer6274nodemodelcommon_CXP9032483-1.2.2
+        ERICer6672nodemodel16a_CXP9032479-1.5.1
+        ERICer6672nodemodel16av2_CXP9032724-1.1.1
+        ERICer6672nodemodelcommon_CXP9032478-1.2.2
+        ERICer6675nodemodelcommon_CXP9032484-1.2.2
+        ERICfmprocessedeventmodel_CXP9030673-1.15.1
+        ERICgeolocationmodel_CXP9031964-1.2.1
+        ERICipnediscoveryhandlermodel_CXP9032433-1.2.4
+        ERICipnesnmpscanflow_CXP9032287-1.0.5
+        ERICiposcmcopyconfigflow_CXP9032603-1.1.1
+        ERICiposcmcopyconfighandlermodel_CXP9032614-1.1.1
+        ERICiposcmheartbtsupflow_CXP9032447-1.0.3
+        ERICiposcmheartbtsuphandlermodel_CXP9032464-1.4.1
+        ERICiposcmnotificationhandlingflow_CXP9032473-1.0.2
+        ERICiposcmsubflow_CXP9032446-1.4.1
+        ERICiposcmsubhandlermodel_CXP9032463-1.4.6
+        ERICiposnodeevent_CXP9032604-1.1.2
+        ERICmedcoreapichannelmodels_CXP9030899-1.1.1
+        ERICmediationiptransportchannelmodels_CXP9032406-1.2.1
+        ERICmediationservicesmodel_CXP9031296-1.4.1
+        ERICnetconfecimoperationflow_CXP9032361-1.5.1
+        ERICnetconfecimsyncnodehandlermodel_CXP9032367-1.5.7
+        ERICnetconfperiodictaskhandlermodel_CXP9031879-1.0.2
+        ERICnetconfsessionbuilderhandmodel_CXP9032079-1.6.1
+        ERICnetconfsessiondestroyerhandmodel_CXP9032256-1.1.1
+        ERICnetconfsessionreleaserhandmodel_CXP9032255-1.0.1
+        ERICnetconfsessionsubshandlermodel_CXP9031878-1.0.3
+        ERICnetconfyangoperationflow_CXP9032362-1.3.1
+        ERICnetconfyangoperationhandlermodel_CXP9032369-1.4.2
+        ERICnetconfyangsyncnodehandlermodel_CXP9032368-1.4.6
+        ERICnetworkelementcmdefmodel_CXP9031291-1.6.2
+        ERICnetworkelementdefmodel_CXP9031290-3.2.1
+        ERICpibmodel_CXP9030858-2.3.2
+        ERICsshcredentialsmanagerhandlermodel_CXP9032067-1.7.1
+        ERICsshtransportconnecthandlermodel_CXP9032168-1.7.2
+    WebApps dependencies:
+        
+ERICenmsgpkiraservice_CXP9031961-1.7.1 [pkiraserv]:
+    Model dependencies:
+        ERICpibmodel_CXP9030858-2.3.2
+        ERICpkicdpsmodel_CXP9032532-1.3.1
+        ERICpkiracmpmodel_CXP9032010-1.5.1
+        ERICpkirascepmodel_CXP9032006-1.4.3-SNAPSHOT
+        ERICpkiratdpsmodel_CXP9032425-1.1.1
+    WebApps dependencies:
+        
+ERICenmsgmssnmpfm_CXP9031734-1.7.10 [mssnmpfm]:
+    Model dependencies:
+        ERICalarmpersistencemodel_CXP9030634-1.12.1
+        ERICcbacmnetconfhandlermodel_CXP9031222-1.4.3
+        ERICcbaconfigurationmodel_CXP9031361-1.6.2
+        ERICcbanetconfconnecthandlermodel_CXP9031346-1.1.1
+        ERICcbanetconfdisconnecthandlermodel_CXP9031348-1.2.1
+        ERICecimnetconffmflowmodel_CXP9032249-1.7.2
+        ERICecimnetconffmhandlermodel_CXP9032248-1.5.1
+        ERICer6000configurationmodel_CXP9032374-1.2.1
+        ERICer6000fmmediationconfiguration_CXP9032382-1.3.1
+        ERICer6000snmpfmhandlermodel_CXP9032403-1.6.3
+        ERICer6000snmpfmmodel_CXP9032380-1.6.2
+        ERICfmmediationeventmodel_CXP9030672-1.10.3-SNAPSHOT
+        ERICiposcmcopyconfighandlermodel_CXP9032614-1.1.1
+        ERICmedcoreapichannelmodels_CXP9030899-1.1.1
+        ERICmedsdkeventmodels_CXP9030898-1.2.1
+        ERICminilinkindoorfmmediationconf_CXP9032306-1.3.1
+        ERICminilinkindoortargetdestflow_CXP9032347-1.5.1
+        ERICmsrbsv2fmmediationconfig_CXP9031733-1.5.1
+        ERICnetconfsessionbuilderhandmodel_CXP9032079-1.6.1
+        ERICnetconfsessiondestroyerhandmodel_CXP9032256-1.1.1
+        ERICpibmodel_CXP9030858-2.3.2
+        ERICsgsnmmenetconffmflowmodel_CXP9032246-1.7.1
+        ERICsgsnmmenetconffmhandlermodel_CXP9032245-1.7.2
+        ERICsgsnmmenetconfpreconnhandmodel_CXP9031947-1.4.1
+        ERICsnmpfmchannelmodels_CXP9032452-1.0.3
+        ERICsnmpfmflowmodel_CXP9031549-1.6.2
+        ERICsnmpfmhandlermodel_CXP9031547-1.10.3
+        ERICsshcredentialsmanagerhandlermodel_CXP9032067-1.7.1
+        ERICsshtransportconnecthandlermodel_CXP9032168-1.7.2
+        ERICtlscredentialsmanagerhandlermodel_CXP9032281-1.3.3
+        ERICwppsgsnmmefmmediationconfigmodel_CXP9031784-1.5.3
+    WebApps dependencies:
+        
+ERICenmsgautoidservice_CXP9031661-1.6.3 [said]:
+    Model dependencies:
+        ERICautocellidmodel_CXP9031283-1.9.1
+    WebApps dependencies:
+        ERICautoidmanagement_CXP9030493-1.9.12
+        
+ERICenmsgitservices_CXP9032039-1.7.3 [itservices]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgdchistory_CXP9032619-1.2.1 [dchistory]:
+    Model dependencies:
+        ERICcmeventsdceventprocessormodel_CXP9032698-1.1.3
+        ERICcmeventsdclistenermodel_CXP9032675-1.1.5
+        ERICcmeventssolrschedulemodel_CXP9032662-1.1.1
+        ERICdlmsconfigurationmodel_CXP9032634-1.0.1
+        ERICdpsconfmodels_CXP9030872-1.4.3
+        ERICpibmodel_CXP9030858-2.3.2
+    WebApps dependencies:
+        
+ERICenmsgnodecli_CXP9032597-1.0.7 [nodecli]:
+    Model dependencies:
+        ERICnodeclimodel_CXP9032672-1.0.1
+    WebApps dependencies:
+        ERICnodecliui_CXP9032670-1.1.1
+        
+ERICenmsgmspmip_CXP9032553-1.1.2 [mspmip]:
+    Model dependencies:
+        ERICcbacmnetconfhandlermodel_CXP9031222-1.4.3
+        ERICcbaconfigurationmodel_CXP9031361-1.6.2
+        ERICcbanetconfconnecthandlermodel_CXP9031346-1.1.1
+        ERICcbanetconfdisconnecthandlermodel_CXP9031348-1.2.1
+        ERICcomecimpmasyncoperhandlermodel_CXP9032166-1.3.1
+        ERICcomecimpmcompleteoperationsflow_CXP9032031-1.5.3
+        ERICcomecimpmfilecollectsetuphandmodel_CXP9031985-1.6.2
+        ERICcomecimpmoperhandlermodel_CXP9032218-1.3.2
+        ERICcomecimpmpollinghandlermodel_CXP9031691-1.4.2
+        ERICdpsdataretrievalsetuphandlermodel_CXP9032388-1.2.1
+        ERICecimpmoperationshandlermodel_CXP9031688-1.3.7
+        ERICer6000cimodel_CXP9031842-1.6.2
+        ERICer6000pmfilecollectionflow_CXP9032616-1.1.1
+        ERICer6000pmmediationconfigurationmodel_CXP9032563-1.1.2
+        ERICer6000pmoperationsflow_CXP9032562-1.1.2
+        ERICer6000pmpollingflow_CXP9032615-1.1.1
+        ERICer6672nodemodel16a_CXP9032479-1.5.1
+        ERICer6672nodemodelcommon_CXP9032478-1.2.2
+        ERICftphandlermodel_CXP9030847-1.20.5
+        ERICmediationcomconnectivityinfomodel_CXP9031276-1.6.1
+        ERICmediationiptransportchannelmodels_CXP9032406-1.2.1
+        ERICnetconfinboundconfighandlermodel_CXP9032317-1.1.1
+        ERICnetconfperiodictaskhandlermodel_CXP9031879-1.0.2
+        ERICnetconfsessionbuilderhandmodel_CXP9032079-1.6.1
+        ERICnetconfsessiondestroyerhandmodel_CXP9032256-1.1.1
+        ERICnetconfsessionsubshandlermodel_CXP9031878-1.0.3
+        ERICosstopmodel_CXP9031292-2.2.2
+        ERICpibmodel_CXP9030858-2.3.2
+        ERICpmicdpshandlermodel_CXP9030598-1.21.5
+        ERICpmicfilecollectionhandlersmodels_CXP9030845-1.21.4
+        ERICpmicmodel_CXP9030403-1.33.19
+        ERICpmicpredefstatsinitsetuphndlrmodels_CXP9032399-1.2.1
+        ERICpmicstatsinitsetuphndlrsmodels_CXP9032397-1.2.1
+        ERICsshcredentialsmanagerhandlermodel_CXP9032067-1.7.1
+        ERICsshtransportconnecthandlermodel_CXP9032168-1.7.2
+    WebApps dependencies:
+        
+ERICenmsglvsrouter_CXP9032652-1.0.7 [lvsrouter]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        
+ERICenmsgscriptinglvsrouter_CXP9032729-1.0.7 [scriptinglvsrouter]:
+    Model dependencies:
+        
+    WebApps dependencies:
+        

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventspecification xmlns="http://www.ericsson.com/PmEvents">
+	<general>
+		<docno>101/1022-HRB105500</docno>
+		<revision>R5A</revision>
+		<date>2013-11-14</date>
+		<author>Generated from 10/ CAH1091864/21-R5A, revision: R5A, by OMF
+		</author>
+		<ffv>T</ffv>
+		<protocols>
+			<protocol>
+				<name>RRC</name>
+				<specification>36.331</specification>
+				<version>11.4.0</version>
+			</protocol>
+			<protocol>
+				<name>S1AP</name>
+				<specification>36.413</specification>
+				<version>10.5.0</version>
+			</protocol>
+			<protocol>
+				<name>X2AP</name>
+				<specification>36.423</specification>
+				<version>11.4.0</version>
+			</protocol>
+			<protocol>
+				<name>MBMS-M3</name>
+				<specification>36.444</specification>
+				<version>11.0.0</version>
+			</protocol>
+		</protocols>
+	</general>
+	<parametertypes>
+		<parametertype>
+			<name>EVENT_PARAM_1_SECTOR_UE_DL_DISTR</name>
+			<type>UINT</type>
+			<description>Sum of active DL UEs that is connected to 1 sector
+			</description>
+			<numberofbytes>4</numberofbytes>
+			<usevalid>Yes</usevalid>
+			<range>
+				<low>0</low>
+				<high>2147483647</high>
+			</range>
+			<resolution>1</resolution>
+		</parametertype>
+		<parametertype>
+			<name>EVENT_PARAM_1_SECTOR_UE_UL_DISTR</name>
+			<type>UINT</type>
+			<description>Sum of active UL UEs that is connected to 1 sector
+			</description>
+			<numberofbytes>4</numberofbytes>
+			<usevalid>Yes</usevalid>
+			<range>
+				<low>0</low>
+				<high>2147483647</high>
+			</range>
+			<resolution>1</resolution>
+		</parametertype>
+		<parametertype>
+        <name>EVENT_PARAM_3GPP_CAUSE_GROUP</name>
+        <type>ENUM</type>
+        <description>This parameter holds all Cause-Group values that are described in the S1AP 3GPP specification, Section 9.2.1.3 in TS 36.413 or in the X2AP 3GPP specification, Section 9.2.6 in TS 36.423.     Needs to be used jointly with EVENT_PARAM_3GPP_CAUSE</description>
+        <numberofbytes>1</numberofbytes>
+        <usevalid>Yes</usevalid>
+        <range>
+          <low>0</low>
+          <high>4</high>
+        </range>
+        <enumeration>
+          <enum internal="EVENT_VALUE_RADIO_NETWORK_LAYER_GROUP" value="0"/>
+          <enum internal="EVENT_VALUE_TRANSPORT_LAYER_GROUP" value="1"/>
+          <enum internal="EVENT_VALUE_NAS_GROUP" value="2"/>
+          <enum internal="EVENT_VALUE_PROTOCOL_GROUP" value="3"/>
+          <enum internal="EVENT_VALUE_MISCELLANEOUS_GROUP" value="4"/>
+        </enumeration>
+      </parametertype>
+	</parametertypes>
+	<events>
+		<event>
+			<name>INTERNAL_EVENT_ADMISSION_BLOCKING_STARTED</name>
+			<id>5211</id>
+			<elements>
+				<param>EVENT_PARAM_1_SECTOR_UE_DL_DISTR</param>
+				<param>EVENT_PARAM_1_SECTOR_UE_UL_DISTR</param>
+				<param>EVENT_PARAM_3GPP_CAUSE_GROUP</param>
+			</elements>
+		</event>
+		<event>
+			<name>INTERNAL_EVENT_ADMISSION_BLOCKING_STOPPED</name>
+			<id>5212</id>
+			<elements>
+				<param>EVENT_PARAM_1_SECTOR_UE_DL_DISTR</param>
+				<param>EVENT_PARAM_1_SECTOR_UE_DL_DISTR</param>
+				<param>EVENT_PARAM_1_SECTOR_UE_UL_DISTR</param>
+			</elements>
+		</event>
+	</events>
+	<predefinedeventgroups>
+		<predefinedeventgroup>
+			<name>SESSION_ESTABLISHMENT_EVALUATION</name>
+			<events>
+				<name>INTERNAL_EVENT_ADMISSION_BLOCKING_STARTED</name>
+				<name>INTERNAL_EVENT_ADMISSION_BLOCKING_STOPPED</name>
+			</events>
+		</predefinedeventgroup>
+		<predefinedeventgroup>
+			<name>SESSION_ESTABLISHMENT_EVALUATION_2</name>
+			<events>
+				<name>INTERNAL_EVENT_ADMISSION_BLOCKING_STARTED</name>
+				<name>INTERNAL_EVENT_ADMISSION_BLOCKING_STOPPED</name>
+			</events>
+		</predefinedeventgroup>
+	</predefinedeventgroups>
+</eventspecification>

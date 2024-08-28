@@ -1,0 +1,7 @@
+[Deployment Support Tooling Versions]
+dst-version 1.15.4
+dce-version 1.16.9
+
+[Deployment Name, Group, Artifact, Version]
+deployment-name=6svc_enm_physical_test
+deployment-GAV=com.ericsson.oss.itpf.deployment.descriptions:enm-full-cdb-deployment:1.16.9

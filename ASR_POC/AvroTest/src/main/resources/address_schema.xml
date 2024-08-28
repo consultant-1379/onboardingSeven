@@ -1,0 +1,8 @@
+{"namespace": "example.avro",
+ "type": "record",
+ "name": "Address",
+ "fields": [
+     {"name": "street", "type": "string"},
+     {"name": "city",  "type": "string"}
+ ]
+}

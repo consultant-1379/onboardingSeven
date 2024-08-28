@@ -1,0 +1,60 @@
+
+{
+    "type" : "record",
+    "name" : "INTERNAL_EVENT_ADV_CELL_SUP_RECOVERY_ATTEMPT",
+    "namespace" : "celltrace.t.r5a.v21",
+    "fields" : [
+        {
+            "name" : "_NE",
+            "type" : "string"
+        },
+        {
+            "name" : "_TIMESTAMP",
+            "type" : "long"
+        },
+        {
+            "name" : "TIMESTAMP_HOUR",
+            "type" : "int"
+        },
+        {
+            "name" : "TIMESTAMP_MINUTE",
+            "type" : "int"
+        },
+        {
+            "name" : "TIMESTAMP_SECOND",
+            "type" : "int"
+        },
+        {
+            "name" : "TIMESTAMP_MILLISEC",
+            "type" : "int"
+        },
+        {
+            "name" : "SCANNER_ID",
+            "type" : "int"
+        },
+        {
+            "name" : "RBS_MODULE_ID",
+            "type" : "long"
+        },
+        {
+            "name" : "GLOBAL_CELL_ID_1",
+            "type" : "long"
+        },
+        {
+            "name" : "GLOBAL_CELL_ID_2",
+            "type" : "long"
+        },
+        {
+            "name" : "ADV_CELL_SUP_RECOVERY_METHOD",
+            "type" : "int"
+        },
+        {
+            "name" : "P_3GPP_CAUSE",
+            "type" : "int"
+        },
+        {
+            "name" : "ADV_CELL_SUP_RULE",
+            "type" : "int"
+        }
+    ]
+}

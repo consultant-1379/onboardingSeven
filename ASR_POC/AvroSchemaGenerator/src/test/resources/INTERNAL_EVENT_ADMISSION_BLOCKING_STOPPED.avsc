@@ -1,0 +1,28 @@
+
+{
+    "type" : "record",
+    "name" : "INTERNAL_EVENT_ADMISSION_BLOCKING_STOPPED",
+    "namespace" : "celltrace.t.r5a.v21",
+    "fields" : [
+        {
+            "name" : "_NE",
+            "type" : "string"
+        },
+        {
+            "name" : "_TIMESTAMP",
+            "type" : "long"
+        },
+        {
+            "name" : "P_1_SECTOR_UE_DL_DISTR_1",
+            "type" : "long"
+        },
+        {
+            "name" : "P_1_SECTOR_UE_DL_DISTR_2",
+            "type" : "long"
+        },
+        {
+            "name" : "P_1_SECTOR_UE_UL_DISTR",
+            "type" : "int"
+        }
+    ]
+}

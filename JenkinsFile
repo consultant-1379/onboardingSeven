@@ -1,0 +1,36 @@
+@Library('ci-pipeline-lib') _
+pipeline {
+    agent { label 'GridEngine' }
+    options {
+        timeout(time: 60, unit: 'MINUTES')
+        timestamps()
+    }
+    stages {
+        stage('Pre-step') {
+            steps {
+                ci_pcr_pre()
+            }
+        }
+        stage('Clone') {
+            steps {
+                //ci_pcr_clone()
+				checkout([$class: 'GitSCM', \				
+				branches: [[name: 'master']], \
+				doGenerateSubmoduleConfigurations: false, \				
+				extensions: [], gitTool: 'Git 2.20.0', \
+				submoduleCfg: [], \
+				userRemoteConfigs: [[url: 'ssh://gerritmirror-ha.lmera.ericsson.se:29418/OSS/com.ericsson.ci.test/onboardingSeven']]])
+                git_test()
+            }
+        }
+    }
+}
+
+def git_test() {
+    sh """
+       touch git_working.txt
+       git add git_working.txt
+       git commit -m "pushing from jenkins file"
+       git push origin HEAD:master
+    """
+}

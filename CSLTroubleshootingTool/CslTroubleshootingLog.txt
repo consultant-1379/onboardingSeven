@@ -1,0 +1,182 @@
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+WARNING: Setting up decoder
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.ltng.jango-protocol-common-R135B.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting cygperl5_22.dll
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting org.apache.httpcomponents.httpcore-4.4.6.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting DynaLoader.pm
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.createstridxml.createstridxml-core-R7B.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting org.antlr.antlr-runtime-3.5.1.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting Socket.pm
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting TestTools.pm
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting org.eclipse.tracecompass.ctf.core.ttd-2.0.0.201608051656.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.cliutil-R2D.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.asn1.lppa-R9B.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting warnings.pm
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting ltng-decoder
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.asn1.nbap-R6A.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.fasterxml.jackson.core.jackson-core-2.6.3.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.asn1.ranap-R6B.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.fasterxml.jackson.core.jackson-annotations-2.6.0.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting org.eclipse.tracecompass.ctf.parser-1.0.0.201608051656.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.fasterxml.jackson.core.jackson-databind-2.6.3.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting Cygwin.pm
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting ch.qos.logback.logback-core-1.1.3.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.google.guava.guava-15.0.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting Unix.pm
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.asn1.s1ap-R6D.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting Carp.pm
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting Basename.pm
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.ltetracetools.ltt-remote-R8C.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.ltng.ltng-cli-R135B.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.ltng.jango-core-R135B.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting cygcrypt-0.dll
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting cygwin1.dll
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.google.code.gson.gson-2.6.2.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.ltng.ltng-lte-R135B.jar
+Jul 13, 2017 2:59:00 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting org.eclipse.tracecompass.common.core-2.0.0.201608051656.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.createifmodelwrat.ifmodelutil-R11A.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting args4j.args4j-2.0.29.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.objsys.asn1j.asn1rt-7.0.0.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting dom4j.dom4j-2.0.0-ALPHA-2.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting org.simpleframework.simple-xml-2.7.1.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting ltng.classpath
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.asn1.rrcutran-R6D.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting lib.pm
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting cygpath.exe
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.usage.usage-reporter-R4M.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting org.hsqldb.hsqldb-2.3.2.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting jaxen.jaxen-1.1.6.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.asn1.x2ap-R6H.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting Cwd.pm
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting batEvDec.pl
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting cyggcc_s-1.dll
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.google.protobuf.protobuf-java-2.5.0.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.rmiltng-R1A.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.ltng.jango-protocol-lte-R135B.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.createprotobufjarwrat.createprotobufjarwrat-if-R6A.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.asn1.rrc-R6E.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting vars.pm
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting commons-logging.commons-logging-1.2.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.ltng.jango-reader-common-R135B.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting cygssp-0.dll
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting strict.pm
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting org.slf4j.slf4j-api-1.7.12.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.ltng.ltng-core-R135B.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting Exporter.pm
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting ch.qos.logback.logback-classic-1.1.3.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting commons-codec.commons-codec-1.9.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.asn1.m3ap-R6B.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.usage.usage-shared-R4M.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting Spec.pm
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.ltng.jango-reader-lte-R135B.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting constant.pm
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting Config.pm
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting XSLoader.pm
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting org.apache.httpcomponents.httpclient-4.5.3.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting perl.exe
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting commons-cli.commons-cli-1.2.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting com.ericsson.testtools.ltng.jango-protocol-wcdma-R135B.jar
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.general.FileManager setupDecoder
+INFO: Extracting register.pm
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.celltrace.CellTraceDecoding decodeFiles
+INFO: Decoding of CellTrace started
+Jul 13, 2017 2:59:01 PM com.ericsson.csltroubleshooting.celltrace.CellTraceDecoding decodeFiles
+INFO: Decoding C:\Users\etaddea\Desktop\Work\Development\Code\CSLTroubleshootingTool\test\com\ericsson\csltroubleshooting\general\CslDecoderTestResources\A20161213.0615-0630_SubNetwork=ONMeContext=ENB244_celltracefile_DUL1_1.bin.gz
+Jul 13, 2017 2:59:26 PM com.ericsson.csltroubleshooting.celltrace.CellTraceDecoding writeDecodedData
+WARNING: [info] Processing of 71 events completed...
+Jul 13, 2017 2:59:26 PM com.ericsson.csltroubleshooting.celltrace.CellTraceDecoding decodeFiles
+INFO: Decoding C:\Users\etaddea\Desktop\Work\Development\Code\CSLTroubleshootingTool\test\com\ericsson\csltroubleshooting\general\CslDecoderTestResources\A20161213.1400+0800-1415+0800_SubNetwork=ONENB244_celltracefile_DUL1_1.bin.gz
+Jul 13, 2017 2:59:47 PM com.ericsson.csltroubleshooting.celltrace.CellTraceDecoding writeDecodedData
+WARNING: [info] Processing of 119 events completed...
+Jul 13, 2017 2:59:47 PM com.ericsson.csltroubleshooting.celltrace.CellTraceDecoding decodeFiles
+INFO: Decoding of CellTrace complete
+Jul 13, 2017 2:59:47 PM com.ericsson.csltroubleshooting.sessions.GenerateSessions generateSessions
+INFO: Procesing of sessions started
+Jul 13, 2017 2:59:47 PM com.ericsson.csltroubleshooting.sessions.GenerateSessions generateSessions
+INFO: Processing C:\Users\etaddea\Desktop\Work\Development\Code\CSLTroubleshootingTool\test\com\ericsson\csltroubleshooting\general\CslDecoderTestResources\A20161213.0615-0630_SubNetwork=ONMeContext=ENB244_celltracefile_DUL1_1.decoded.txt to C:\Users\etaddea\Desktop\Work\Development\Code\CSLTroubleshootingTool\test\com\ericsson\csltroubleshooting\general\CslDecoderTestResources\A20161213.0615-0630_SubNetwork=ONMeContext=ENB244_celltracefile_DUL1_1.sessions.txt
+Jul 13, 2017 2:59:47 PM com.ericsson.csltroubleshooting.sessions.GenerateSessions generateSessions
+INFO: Processing C:\Users\etaddea\Desktop\Work\Development\Code\CSLTroubleshootingTool\test\com\ericsson\csltroubleshooting\general\CslDecoderTestResources\A20161213.1400+0800-1415+0800_SubNetwork=ONENB244_celltracefile_DUL1_1.decoded.txt to C:\Users\etaddea\Desktop\Work\Development\Code\CSLTroubleshootingTool\test\com\ericsson\csltroubleshooting\general\CslDecoderTestResources\A20161213.1400+0800-1415+0800_SubNetwork=ONENB244_celltracefile_DUL1_1.sessions.txt
+Jul 13, 2017 2:59:47 PM com.ericsson.csltroubleshooting.sessions.GenerateSessions generateSessions
+INFO: Processing of sessions complete
+Jul 13, 2017 2:59:47 PM com.ericsson.csltroubleshooting.sessions.DetermineCslFileTimes analyseFiles
+INFO: For CellTrace file A20161213.0615-0630_SubNetwork=ONMeContext=ENB244_celltracefile_DUL1_1.bin.gz look for CSL files starting around 2016-12-13 15:15 for complete records and CSL files starting around 2016-12-13 15:30 for incomplete/'99' records
+Jul 13, 2017 2:59:47 PM com.ericsson.csltroubleshooting.sessions.DetermineCslFileTimes analyseFiles
+INFO: For CellTrace file A20161213.1400+0800-1415+0800_SubNetwork=ONENB244_celltracefile_DUL1_1.bin.gz look for CSL files starting around 2016-12-13 15:00 for complete records and CSL files starting around 2016-12-13 15:15 for incomplete/'99' records
+Jul 13, 2017 2:59:47 PM com.ericsson.csltroubleshooting.search.CellTraceSearchProcessor searchCellTraceSessionFiles
+INFO: Event found in C:\Users\etaddea\Desktop\Work\Development\Code\CSLTroubleshootingTool\test\com\ericsson\csltroubleshooting\general\CslDecoderTestResources\A20161213.0615-0630_SubNetwork=ONMeContext=ENB244_celltracefile_DUL1_1.sessions.txt with Event Name name:  INTERNAL_PROC_HO_PREP_X2_IN  at line 6

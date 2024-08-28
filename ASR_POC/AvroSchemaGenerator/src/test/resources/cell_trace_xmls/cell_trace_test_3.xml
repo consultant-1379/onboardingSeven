@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventspecification xmlns="http://www.ericsson.com/PmEvents">
+	<general>
+		<docno>CXC1735777/21</docno>
+		<revision>R5A</revision>
+		<date>2013-11-14</date>
+		<author>Generated from 10/ CAH1091864/21-R5A, revision: R5A, by OMF
+		</author>
+		<ffv>T</ffv>
+		<protocols>
+			<protocol>
+				<name>RRC</name>
+				<specification>36.331</specification>
+				<version>11.4.0</version>
+			</protocol>
+			<protocol>
+				<name>S1AP</name>
+				<specification>36.413</specification>
+				<version>10.5.0</version>
+			</protocol>
+			<protocol>
+				<name>X2AP</name>
+				<specification>36.423</specification>
+				<version>11.4.0</version>
+			</protocol>
+			<protocol>
+				<name>MBMS-M3</name>
+				<specification>36.444</specification>
+				<version>11.0.0</version>
+			</protocol>
+		</protocols>
+	</general>
+	<parametertypes>	  
+      <parametertype>
+        <name>EVENT_PARAM_TIMESTAMP_MINUTE</name>
+        <type>UINT</type>
+        <description></description>
+        <numberofbytes>1</numberofbytes>
+        <usevalid>Yes</usevalid>
+        <range>
+          <low>0</low>
+          <high>127</high>
+        </range>
+        <resolution>1</resolution>
+        <unit>Minute</unit>
+      </parametertype>
+      <parametertype>
+        <name>EVENT_PARAM_TIMESTAMP_SECOND</name>
+        <type>UINT</type>
+        <description></description>
+        <numberofbytes>1</numberofbytes>
+        <usevalid>Yes</usevalid>
+        <range>
+          <low>0</low>
+          <high>127</high>
+        </range>
+        <resolution>1</resolution>
+        <unit>Second</unit>
+        <comment>Range is 0 to 61 to handle leap seconds</comment>
+      </parametertype>
+      <parametertype>
+        <name>EVENT_PARAM_TIMESTAMP_MILLISEC</name>
+        <type>UINT</type>
+        <description></description>
+        <numberofbytes>2</numberofbytes>
+        <usevalid>Yes</usevalid>
+        <range>
+          <low>0</low>
+          <high>32767</high>
+        </range>
+        <resolution>1</resolution>
+        <unit>ms</unit>
+      </parametertype>
+      <parametertype>
+        <name>EVENT_PARAM_SCANNER_ID</name>
+        <type>UINT</type>
+        <description>16 scanners for UE Trace and 6 scanners for Cell Trace. The scanner ID consists of a sequence of 22 bits, each bit corresponds to a particular scanner ID. See also 'Performance Management' 3/1551-HSC 105 50/1</description>
+        <numberofbytes>3</numberofbytes>
+        <usevalid>No</usevalid>
+        <range>
+          <low>0</low>
+          <high>8388607</high>
+        </range>
+        <resolution>1</resolution>
+        <comment>16 scanners for UE Trace and 6 scanners for Cell Trace. The scanner ID field is consists of sequence of 22 bits, each bit corresponding to a particular scanner ID. See 'File Format Description' 1/198 18-HRB 105 500 for an enhanced description.</comment>
+      </parametertype>
+      <parametertype>
+        <name>EVENT_PARAM_RBS_MODULE_ID</name>
+        <type>ENUM</type>
+        <description>DUL (Digital Unit reference)</description>
+        <numberofbytes>1</numberofbytes>
+        <usevalid>Yes</usevalid>
+        <range>
+          <low>0</low>
+          <high>2147483650</high>
+        </range>
+        <enumeration>
+          <enum internal="EVENT_VALUE_MASTER_DU" value="0"/>
+          <enum internal="EVENT_VALUE_EXTENSION_DU1" value="1"/>
+          <enum internal="EVENT_VALUE_EXTENSION_DU2" value="2"/>
+        </enumeration>
+      </parametertype>
+      <parametertype>
+        <name>EVENT_PARAM_GLOBAL_CELL_ID</name>
+        <type>UINT</type>
+        <description>Identity of the cell, defined in MOM (eNB ID (20 bits) + Cell ID (8 bits) )</description>
+        <numberofbytes>4</numberofbytes>
+        <usevalid>Yes</usevalid>
+        <range>
+          <low>0</low>
+          <high>2147483650</high>
+        </range>
+        <resolution>1</resolution>
+        <comment>ECGI, E-UTRAN Cell Global Identifier. The eNB ID part will not be set in iteration 9.</comment>
+      </parametertype>
+      <parametertype>
+        <name>EVENT_PARAM_ADV_CELL_SUP_RECOVERY_METHOD</name>
+        <type>ENUM</type>
+        <description>The method for Advanced Cell Supervision recovery from sleeping cell.</description>
+        <numberofbytes>1</numberofbytes>
+        <usevalid>Yes</usevalid>
+        <range>
+          <low>0</low>
+          <high>1</high>
+        </range>
+        <enumeration>
+          <enum internal="EVENT_VALUE_ADV_CELL_SUP_CELL" value="0"/>
+          <enum internal="EVENT_VALUE_ADV_CELL_SUP_NODE" value="1"/>
+        </enumeration>
+      </parametertype>
+      <parametertype>
+        <name>EVENT_PARAM_ADV_CELL_SUP_RULE</name>
+        <type>UINT</type>
+        <description>The number of the rule that triggered sleeping cell detection. For description of the rules, see the user description of feature 'Advanced Cell Supervision'.</description>
+        <numberofbytes>3</numberofbytes>
+        <usevalid>Yes</usevalid>
+        <range>
+          <low>0</low>
+          <high>127</high>
+        </range>
+        <resolution>1</resolution>
+      </parametertype>
+      <parametertype>
+        <name>EVENT_PARAM_TIMESTAMP_HOUR</name>
+        <type>UINT</type>
+        <description></description>
+        <numberofbytes>1</numberofbytes>
+        <usevalid>Yes</usevalid>
+        <range>
+          <low>0</low>
+          <high>127</high>
+        </range>
+        <resolution>1</resolution>
+        <unit>Hour</unit>
+      </parametertype>
+	  <parametertype>
+        <name>EVENT_PARAM_3GPP_CAUSE</name>
+        <type>UINT</type>
+        <description>This parameter holds any possible Cause value described in the S1AP 3GPP specification, Section 9.2.1.3 in TS 36.413 or in the X2AP 3GPP specification, Section 9.2.6 in TS 36.423.  Needs to be used jointly with EVENT_PARAM_3GPP_CAUSE_GROUP</description>
+        <numberofbytes>1</numberofbytes>
+        <usevalid>Yes</usevalid>
+        <range>
+          <low>0</low>
+          <high>127</high>
+        </range>
+        <resolution>1</resolution>
+        <comment>relects the value of the enumerated elements in S1AP 3GPP specification, Section 9.2.1.3 in TS 36.413 or in the X2AP 3GPP specification, Section 9.2.6 in TS 36.423 where the first vale is 0, etc</comment>
+      </parametertype>
+	</parametertypes>
+	<events>
+		<event>
+          <name>INTERNAL_EVENT_ADV_CELL_SUP_RECOVERY_ATTEMPT</name>
+          <id>5229</id>
+          <elements>
+            <param>EVENT_PARAM_TIMESTAMP_HOUR</param>
+            <param>EVENT_PARAM_TIMESTAMP_MINUTE</param>
+            <param>EVENT_PARAM_TIMESTAMP_SECOND</param>
+            <param>EVENT_PARAM_TIMESTAMP_MILLISEC</param>
+            <param>EVENT_PARAM_SCANNER_ID</param>
+            <param>EVENT_PARAM_RBS_MODULE_ID</param>
+            <param>EVENT_PARAM_GLOBAL_CELL_ID</param>
+			<param>EVENT_PARAM_GLOBAL_CELL_ID</param>
+            <param>EVENT_PARAM_ADV_CELL_SUP_RECOVERY_METHOD</param>	
+			<param>EVENT_PARAM_3GPP_CAUSE</param>			
+            <param>EVENT_PARAM_ADV_CELL_SUP_RULE</param>
+          </elements>
+        </event>
+	</events>
+	<predefinedeventgroups>
+		<predefinedeventgroup>
+			<name>SESSION_ESTABLISHMENT_EVALUATION</name>
+			<events>
+				<name>INTERNAL_EVENT_ADMISSION_BLOCKING_STARTED</name>
+				<name>INTERNAL_EVENT_ADMISSION_BLOCKING_STOPPED</name>
+			</events>
+		</predefinedeventgroup>
+		<predefinedeventgroup>
+			<name>SESSION_ESTABLISHMENT_EVALUATION_2</name>
+			<events>
+				<name>INTERNAL_EVENT_ADMISSION_BLOCKING_STARTED</name>
+				<name>INTERNAL_EVENT_ADMISSION_BLOCKING_STOPPED</name>
+			</events>
+		</predefinedeventgroup>
+	</predefinedeventgroups>
+</eventspecification>
+	
+	
+	

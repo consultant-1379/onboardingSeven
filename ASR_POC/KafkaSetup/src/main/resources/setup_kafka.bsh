@@ -1,0 +1,174 @@
+#!/bin/bash
+
+######################################################
+#                       Commands                     #
+######################################################
+
+logit(){
+   echo $*
+   echo `date '+%Y%m%d_%H%M%S'` $* >> $MAIN_LOGFILE
+}
+
+usage(){
+	echo "Installs Kafka and Zookeeper"
+	echo "setup_kafka.bsh <Kafka Tar File> <Zookeeper Tar File>"
+	echo "e.g.:  bash setup_kafka.bsh kafka_2.11-0.9.0.1.tgz zookeeper-3.4.6.tar.gz"
+}
+
+
+zookeeper_exists(){
+	#logit "Checking if Zookeeper exists in this directory"
+	exists=`ls | grep zookeeper | grep -v .tar.gz | wc -l`
+	return $exists
+}
+
+kafka_exists(){
+	#logit "Checking if Kafka exists in this directory"
+	exists=`ls | grep kafka_ | grep -v .tgz | wc -l`
+	return $exists
+}
+
+
+preinstall_check_zookeeper_installed(){
+	zookeeper_exists
+	if [ $? -gt 0 ]
+	then
+		logit "Zookeeper already exists in this directory"
+		logit "Exiting Setup"
+		exit 1
+	fi
+}
+
+preinstall_check_kafka_installed(){
+	kafka_exists
+	if [ $? -gt 0 ]
+	then
+		logit "Kafka already exists in this directory"
+		logit "Exiting Setup"
+		exit 1
+	fi
+}
+
+postinstall_check_kafka_installed(){
+	kafka_exists
+	if [ $? -gt 0 ]
+	then
+		logit "Kafka setup complete"
+	else
+		logit "Kafka does not exist in this directory"
+		logit "ERROR: Kafka was not setup successfully"
+	fi
+}
+
+postinstall_check_zookeeper_installed(){
+	zookeeper_exists
+	if [ $? -gt 0 ]
+	then
+		logit "Zookeeper setup complete"
+	else
+		logit "Zookeeper does not exist in this directory"
+		logit "ERROR: Zookeeper was not setup successfully"
+	fi
+}
+
+
+install_kafka(){
+	logit "Installing Kafka"
+	untar_kafka
+}
+
+untar_kafka(){
+	logit "Extracting Kafka from $KAFKA_TAR"
+	tar -zxvf $KAFKA_TAR
+	if [ $? -ne 0 ] ; then
+		logit "Failed to untar $KAFKA_TAR"
+		logit "Exiting Setup"
+		exit 1
+	fi
+}
+
+install_zookeeper(){
+	logit "Installing Zookeeper"
+	untar_zookeeper
+}
+
+untar_zookeeper(){
+	logit "Extracting Zookeeper from $ZOOKEEPER_TAR"
+	tar -zxvf $ZOOKEEPER_TAR
+	if [ $? -ne 0 ] ; then
+		logit "Failed to untar $ZOOKEEPER_TAR"
+		logit "Exiting Setup"
+		exit 1
+	fi		
+}
+
+copy_file(){
+	file=$1
+	destination_dir=$2
+	cp $file $destination_dir
+	if [ $? -ne 0 ] ; then
+		logit "Failed to copy $file to destination_dir"
+		logit "Exiting Setup"
+		exit 1
+	else
+		logit "Updated ${destination_dir}${file}"
+	fi
+
+}
+
+update_zookeeper_config(){
+	logit "Updating Zookeeper Config"
+	copy_file "zoo.cfg" "zookeeper-3.4.6/conf/"
+	copy_file "log4j.properties" "zookeeper-3.4.6/conf/"
+}
+
+update_kafka_config(){
+	logit "Updating Kafka Config"
+	copy_file "server.properties" "kafka_2.10-0.8.2.1/config/"
+}
+
+setup_variables(){
+	date=`date '+%Y%m%d_%H%M%S': `
+	MAIN_LOGFILE="setup_kafka-${date}.log"
+}
+
+preinstall_checks(){
+	preinstall_check_zookeeper_installed
+	preinstall_check_kafka_installed
+}
+
+
+post_install_checks(){
+	postinstall_check_zookeeper_installed
+	postinstall_check_kafka_installed
+}
+
+post_install_config(){
+	update_zookeeper_config
+	update_kafka_config
+}
+
+setup(){
+	setup_variables
+	preinstall_checks
+	install_zookeeper
+	install_kafka
+	post_install_checks
+	post_install_config
+}
+
+
+######################################################
+# Name: Main			              				 #
+# Description: The main body of the script			 #
+######################################################
+
+if [ $# -eq 2 ]
+then
+	KAFKA_TAR=$1
+	ZOOKEEPER_TAR=$2
+	setup
+	logit "Setup Finished"
+else 
+	usage
+fi

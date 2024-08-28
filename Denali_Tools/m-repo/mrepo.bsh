@@ -1,0 +1,1666 @@
+#!/bin/bash
+
+trap "user_interruption" SIGINT
+
+user_interruption(){
+
+    reset_directory_location_if_using_taf
+    user_interruption_message
+}
+
+reset_directory_location_if_using_taf(){
+
+    if [ ! -z "$TAF_RUN" ]
+    then
+        cd ..
+    fi
+}
+user_interruption_message(){
+    echo ""
+    echo ""
+    echo ""
+    echo "Exiting - User Stopped Script"
+    exit 999
+}
+
+
+#############################
+#                           #
+#        Repos              #
+#                           #
+#############################
+
+
+5g_repos(){
+	echo ""
+    echo "Cloning 5G Repositories"
+    echo ""
+
+	clone_repo "com.ericsson.oss.5g" "5g" "OSS-PROTO"
+}
+
+
+esn_repos(){
+
+    echo ""
+    echo "Cloning ESN Feature Repositories"
+    echo ""
+
+    # implementation repositories
+    clone_repo "com.ericsson.oss.mediation.esn" "esn-bus"
+    clone_repo "com.ericsson.oss.mediation.esn" "esn-coordination"
+    clone_repo "com.ericsson.oss.mediation.esn" "esn-mediation"
+    clone_repo "com.ericsson.oss.mediation.esn" "esn-forwarder"
+    clone_repo "com.ericsson.oss.mediation.esn" "esn-schema-api"
+    clone_repo "com.ericsson.oss.services.esn" "esn-service-models"
+
+    # testware repositories
+    clone_repo "com.ericsson.oss.mediation.esn" "esn-testware"
+
+    # service group repositories
+    clone_repo "com.ericsson.oss.servicegroupcontainers" "esn-bus-def"
+    clone_repo "com.ericsson.oss.servicegroupcontainers" "esn-coordination-def"
+    clone_repo "com.ericsson.oss.servicegroupcontainers" "esn-mediation-def"
+    clone_repo "com.ericsson.oss.servicegroupcontainers" "esn-forwarder-decoded-def"
+    clone_repo "com.ericsson.oss.servicegroupcontainers" "esn-forwarder-undecoded-def"
+    clone_repo "com.ericsson.oss.servicegroupcontainers" "esn-streamterminator-def"
+    clone_repo "com.ericsson.oss.servicegroupcontainers" "esn-schema-api-def"
+    
+    clone_repo "com.ericsson.oss.mediation.netty" "event-stream-terminator"
+    clone_repo "mediation" "mediation.streamterminator" "AIA"
+}
+
+
+pmic_lite_repos(){
+    echo ""
+    echo "Cloning PMIC Feature Repositories"
+    echo "This will only copy a small amount of repositories needed for Team Denali"
+    echo ""
+
+    clone_repo "com.ericsson.oss.pmic.mediation.testsuite" "pmic-mediation-testsuite"
+    clone_repo "com.ericsson.oss.pmic" "pm-test"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "erbs-pm-handlers-code"
+    clone_repo "com.ericsson.oss.mediation.pm.models.handlers" "erbs-pm-handlers-model"
+    clone_repo "com.ericsson.oss.pmic" "pm-service"
+    clone_repo "com.ericsson.oss.models.pmic.mediation.handlers" "pmic-corba-handler-model"
+    clone_repo "com.ericsson.oss.models.pmic.mediation.handlers" "pmic-corba-handler-code"
+    clone_repo "com.ericsson.oss.models.pmic.mediation.flow" "pmic-initiation-flow"
+
+    clone_repo "com.ericsson.oss.models.pmic.mediation.config" "pmic-mediation-config"
+    clone_repo "com.ericsson.oss.mediation.pm.models.handlers" "pmic-common-scanner-handler-model"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "pmic-common-scanner-handler-code"
+    clone_repo "com.ericsson.oss.mediation.pmic.modules" "pmic-common-module-api"
+    clone_repo "com.ericsson.oss.mediation.pmic.modules" "pmic-common-module-impl"
+
+    #clone_repo "com.ericsson.oss.mediation.pm.handlers" "com-ecim-pm-eventsm-operation-handler-code"
+    #clone_repo "com.ericsson.oss.mediation.pm.models.handlers" "com-ecim-pm-eventsm-operation-handler-model"
+}
+
+
+pmic_repos(){
+    echo ""
+    echo "Cloning PMIC Feature Repositories"
+    echo ""
+
+    clone_repo "com.ericsson.oss.pmic.mediation.testsuite" "pmic-mediation-testsuite"
+    clone_repo "com.ericsson.oss.pmic" "pm-test"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "erbs-pm-handlers-code"
+    clone_repo "com.ericsson.oss.mediation.pm.models.handlers" "erbs-pm-handlers-model"
+    clone_repo "com.ericsson.oss.pmic" "pm-service"
+    clone_repo "com.ericsson.oss.models.pmic.mediation.handlers" "pmic-corba-handler-model"
+    clone_repo "com.ericsson.oss.models.pmic.mediation.handlers" "pmic-corba-handler-code"
+    clone_repo "com.ericsson.oss.models.pmic.mediation.flow" "pmic-initiation-flow"
+    clone_repo "com.ericsson.oss.models.pmic.mediation.config" "pmic-mediation-config"
+    clone_repo "com.ericsson.oss.mediation.pm.models.handlers" "pmic-common-scanner-handler-model"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "pmic-common-scanner-handler-code"
+    clone_repo "com.ericsson.oss.mediation.pmic.modules" "pmic-common-module-api"
+    clone_repo "com.ericsson.oss.mediation.pmic.modules" "pmic-common-module-impl"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "com-ecim-pm-eventsm-operation-handler-code"
+    clone_repo "com.ericsson.oss.mediation.pm.models.handlers" "com-ecim-pm-eventsm-operation-handler-model"
+    clone_repo "com.ericsson.oss.pmic" "pm-gui"
+    clone_repo "com.ericsson.oss.models.pmic.mediation.handlers" "pmic-dps-handler-model"
+    clone_repo "com.ericsson.oss.models.pmic.mediation.handlers" "pmic-dps-handler-code"
+    clone_repo "com.ericsson.oss.mediation.pmic.collection.flow.model" "pmic-collection-flow-model"
+    clone_repo "com.ericsson.oss.mediation.pmic.collection.handlers.impl" "pmic-collection-handler-code"
+    clone_repo "com.ericsson.oss.mediation.pmic.collection.handlers.model" "pmic-collection-handler-models"
+    clone_repo "com.ericsson.oss.itpf.flowDsl.common.handlers" "ftp-handler-code"
+    clone_repo "com.ericsson.oss.itpf.flowDsl.common.handler.models" "ftp-handler-models"
+    clone_repo "com.ericsson.oss.mediation.adapter.ftp" "ftp-jca-connector-api"
+    clone_repo "com.ericsson.oss.mediation.adapter.ftp" "ftp-jca-connector"
+    clone_repo "com.ericsson.oss.mediation.pm.models.flows" "ecim-pm-operations-flow"
+    clone_repo "com.ericsson.oss.mediation.pm.models.configurations" "sgsn-mme-pm-mediation-configuration-model"
+    clone_repo "com.ericsson.oss.mediation.pm.models.flows" "com-ecim-pm-file-collection-flow"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "com-ecim-pm-file-collection-setup-handler-code"
+    clone_repo "com.ericsson.oss.mediation.pm.models.flows" "com-ecim-pm-operations-flow"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "com-ecim-pm-eventsm-operation-handler-code"
+    clone_repo "com.ericsson.oss.mediation.pm.models.handlers" "com-ecim-pm-eventsm-operation-handler-model"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "com-ecim-pm-async-operations-handler-code"
+    clone_repo "com.ericsson.oss.services.pmic.modules" "com-ecim-pmic-module"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "dps-data-retrieval-and-setup--handler-code"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "dps-data-retrieval-and-setup-handler-model"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "erbs-cpp-pmic-collection-handlers-code"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers.model" "erbs-cpp-pmic-collection-handlers-model"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "pmic-initiation-handlers-code"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers.model" "pmic-initiation-handlers-model"
+    clone_repo "com.ericsson.oss.mediation.pmic.modules" "pmic-common-module-impl"
+    clone_repo "com.ericsson.oss.mediation.pmic.modules" "pmic-common-module-api"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "sgsn-mme-pm-initiation-handlers-code"
+    clone_repo "com.ericsson.oss.mediation.pm.models.handlers" "sgsn-mme-pm-initiation-handlers-model"
+    clone_repo "com.ericsson.oss.mediation.pm.models.handlers" "pmic-common-scanner-handler-model"
+    clone_repo "com.ericsson.oss.mediation.pm.handlers" "pmic-common-scanner-handler-code"
+    clone_repo "com.ericsson.oss.pmic" "pm-cli"
+    clone_repo "com.ericsson.nms.medaition.models" "mediation-configuration-models"
+    clone_repo "com.ericsson.oss.itpf.flowDsl.common.handler.models" "model-event-sender-models"
+
+}
+
+
+cslm_repos(){
+    echo ""
+    echo "Cloning CSL-M Feature Repositories"
+    echo ""
+
+    clone_repo "com.ericsson.oss.services" "EpsExtensions"
+    clone_repo "com.ericsson.oss.services" "csl"
+    clone_repo "com.ericsson.oss.services" "csl_topology"
+    clone_repo "com.ericsson.oss.services" "csl_topology_config"
+    clone_repo "com.ericsson.oss.services" "csl-testware"
+    clone_repo "com.ericsson.oss.services" "S3"
+    clone_repo "com.ericsson.oss.services" "epsstnbi"
+    clone_repo "com.ericsson.oss.services" "epsstnbi-api"
+    clone_repo "com.ericsson.oss.csl.ci" "siteEngineeringFiles"
+    clone_repo "com.ericsson.oss.itpf.deployment" "cslmedinst"
+    clone_repo "com.ericsson.oss.mediation" "parsers"
+    clone_repo "com.ericsson.oss.mediation" "parsers-api"
+}
+
+model_repos(){
+    echo ""
+    echo "Cloning Modeling Feature Repositories"
+    echo ""
+
+    clone_repo "com.ericsson.oss.itpf.modeling.tools" "Annotation-Processor"
+    clone_repo "com.ericsson.oss.itpf.modeling.sdk" "Annotation-Processor-Tutorial"
+    clone_repo "com.ericsson.oss.itpf.modeling.sdk" "Modeling-Sdk"
+    clone_repo "com.ericsson.oss.itpf.modeling.tools" "Model-Processing"
+    clone_repo "com.ericsson.oss.itpf.modeling" "Annotation"
+    clone_repo "com.ericsson.oss.itpf.modeling" "Model-Deployment-Tool"
+    clone_repo "com.ericsson.oss.itpf.modeling" "Model-Deployment-Tool-API"
+    clone_repo "com.ericsson.oss.itpf.modeling" "Model-Repo-Entities"
+    clone_repo "com.ericsson.oss.itpf.modeling" "Model-Service"
+    clone_repo "com.ericsson.oss.itpf.modeling" "Model-Service-Api"
+    clone_repo "com.ericsson.oss.itpf.modeling" "Modeling-BOM"
+    clone_repo "com.ericsson.oss.itpf.modeling" "Modeling-Common"
+    clone_repo "com.ericsson.oss.itpf.modeling" "Schemata"
+    clone_repo "com.ericsson.oss.itpf.modeling" "model-deployment-client"
+    clone_repo "com.ericsson.oss.itpf.modeling" "model-identifier-generator"
+    clone_repo "com.ericsson.oss.itpf.modeling" "model-identifier-generator-tool"
+}
+csd_repos(){
+    echo ""
+    echo "Cloning CSD - Cell Trace Stream Decoding and Forwarding Feature Repositories"
+    echo ""
+
+    # CSD Repos
+        clone_repo "com.ericsson.oss.services" "csl_csd"
+        clone_repo "com.ericsson.oss.services" "epsstnbi_csd"
+        clone_repo "com.ericsson.oss.services" "epsstnbi-api_csd"
+        clone_repo "com.ericsson.oss.services" "assure_zookeeper_csd"
+        clone_repo "com.ericsson.oss.services" "csl_patterns_csd"
+
+        clone_repo "com.ericsson.oss.itpf" "csl_monitoring_csd"
+        clone_repo "com.ericsson.oss.itpf.deployment" "cslmedinst_csd"
+
+        clone_repo "com.ericsson.oss.csl.ci" "siteEngineeringFiles_csd"
+
+        clone_repo "com.ericsson.oss.mediation.netty" "event-stream-terminator"
+        clone_repo "com.ericsson.oss.mediation.netty" "event-stream-terminator-rpm"
+
+    # S3
+        clone_repo "com.ericsson.oss.services" "S3"
+
+    # CDS Repos
+        clone_repo "com.ericsson.oss.services" "EpsExtensions"
+        clone_repo "com.ericsson.oss.mediation" "parsers"
+        clone_repo "com.ericsson.oss.mediation" "parsers-api"
+        clone_repo "com.ericsson.oss.mediation" "pmstreaming_elasticity_csd"
+
+    # Testware
+        clone_repo "com.ericsson.oss.itpf.platform" "csl-ddc-taf_csd"
+        clone_repo "com.ericsson.oss.itpf.platform" "csl_monitoring_taf_csd"
+        clone_repo "com.ericsson.oss.mediation.netty.taf" "event-stream-terminator-testware"
+        clone_repo "com.ericsson.oss.itpf.deployment" "cslmedinstpitaf_csd"
+        clone_repo "com.ericsson.oss.itpf.deployment" "cslmedinsttaf_csd"
+        clone_repo "com.ericsson.oss.services" "csl-testware_csd"
+
+    # Unused Repos
+        clone_repo "com.ericsson.oss.itpf.platform" "csl-ddc_csd"
+        clone_repo "com.ericsson.oss.itpf.deployment" "cslmrollbacktaf_csd"
+        clone_repo "com.ericsson.oss.csl.ci" "jsonhostproperties_csd"
+}
+
+
+eniq_enm_integration_repos(){
+    echo ""
+    echo "Cloning ENIQ ENM Integration (ETS) Feature Repositories"
+    echo ""
+
+    clone_repo "com.ericsson.oss.services.eniq.topologyservice.model" "esn-mediation"
+    clone_repo "com.ericsson.oss.services.eniq.topologyservice" "eniq-export-transformation-provider"
+    clone_repo "com.ericsson.oss.services.eniq.topologyservice" "eniq-topology-service-impl"
+    clone_repo "com.ericsson.oss.services" "eniqintegrationtaf-testware"
+    clone_repo "com.ericsson.oss.services" "ENIQintegrationService"
+}
+
+
+service_framework_repos(){
+    echo ""
+    echo "Cloning Service Framework Feature Repositories"
+    echo ""
+
+    clone_repo "com.ericsson.oss.itpf.sdk" "ServiceFramework"
+    clone_repo "com.ericsson.oss.itpf.sdk" "ServiceFrameworkAPI"
+    clone_repo "com.ericsson.oss.itpf.sdk" "serviceframeworkdb"
+}
+
+
+
+license_control_monitoring_repos(){
+    echo ""
+    echo "Cloning LCM (License Control Monitoring Feature Repositories"
+    echo ""
+
+    clone_repo "com.ericsson.oss.services.lcm" "license-control-monitoring-service"
+    clone_repo "com.ericsson.oss.services.lcm" "license-control-monitoring-service-testware"
+}
+
+stream_terminator_repo(){
+    echo ""
+    echo "Cloning Stream Terminator Feature Repositories"
+    echo ""
+
+    clone_repo "com.ericsson.oss.mediation.netty" "event-stream-terminator"
+}
+
+
+ebsm_repos(){
+    echo ""
+    echo "Cloning EBS-M Feature Repositories"
+    echo ""
+
+    clone_repo "com.ericsson.oss.servicegroupcontainers" "ebsm"
+    clone_repo "com.ericsson.oss.mediation.pm.ebs.models.flows" "ebsm-flow"
+    clone_repo "com.ericsson.oss.servicegroupcontainers" "ebsm-controller"
+    clone_repo "com.ericsson.oss.mediation.pm.ebs" "ebs-controller"
+    clone_repo "com.ericsson.oss.mediation.pm.ebs" "ebsm-db"
+    clone_repo "com.ericsson.oss.mediation.pm.ebs" "ebsm-testware"
+    clone_repo "com.ericsson.oss.mediation" "parsers"
+    clone_repo "com.ericsson.oss.mediation" "parsers-api"
+    clone_repo "com.ericsson.oss.mediation.modeling.tools" "pm-ebs-transformer"
+}
+
+
+grit_repos(){
+    echo ""
+    echo "Cloning GRIT Feature Repositories"
+    echo ""
+
+    clone_repo "com.ericsson.eniq" "GRIT"
+}
+
+
+dst_repos(){
+    echo ""
+    echo "Cloning DST Feature Repositories"
+    echo ""
+
+    clone_repo "com.ericsson.oss.itpf.deployment.tools" "defaultConfigurableEntities"
+    clone_repo "com.ericsson.oss.itpf.deployment.descriptions" "deploymentDescriptions"
+}
+
+
+test_repos(){
+    echo ""
+    echo "Cloning TEST Feature Repositories"
+    echo ""
+
+    clone_repo "com.ericsson.ci.test" "onboardingSeven"
+}
+
+#############################
+#                           #
+#        Command Runner     #
+#                           #
+#############################
+
+FAIL_ON_ERROR="true"
+
+run_command(){
+    command=$1
+    message=$2
+    repo=$3
+
+    if [ -z "$repo" ]
+    then
+        run_command_all_dirs "$message" "$command"
+    else
+        message="$message $repo"
+        run_command_single_dir "$message" "$command" "$repo"
+    fi
+
+    echo "Finished"
+    echo ""
+    echo ""
+}
+
+
+run_command_all_dirs(){
+    message=$1
+    command=$2
+
+    dirs=$(ls -d ./*/)
+
+    for dir in $dirs
+    do
+        echo "$message $dir"
+        cd "$dir"
+        execute_command "$command"
+        cd ..
+        echo ""
+    done
+}
+
+
+run_command_single_dir(){
+    message=$1
+    command=$2
+    dir=$3
+
+    echo "$message"
+    cd "$dir"
+    if [ $? -ne 0 ]
+    then
+        echo "Invalid directory $dir"
+        echo "Exiting"
+        exit 1
+    else
+        execute_command "$command"
+        cd ..
+    fi
+}
+
+
+execute_command(){
+    command=$1
+    errorMessage=$2
+
+    eval "$command"
+    returnCode=$?
+
+    if [ "$FAIL_ON_ERROR" = "true" ]
+    then
+        if [ $returnCode -ne 0 ]
+        then
+            echo ""
+            echo ""
+            echo ""
+            echo "Command \"$command\" failed"
+            echo "$errorMessage"
+            echo ""
+            echo "EXITING SCRIPT"
+            exit 10
+        fi
+    fi
+}
+
+#############################
+#                           #
+#        GIT Commands       #
+#                           #
+#############################
+
+clone_repos(){
+    feature=$1
+    branchName=$2
+
+    USERNAME=$(whoami | cut -d\\ -f2);
+
+    if [ -z "$feature" ]
+    then
+        usage_clone
+    elif [ "$feature" = "ASR" ]
+    then
+        csd_repos
+    elif [ "$feature" = "CSD" ]
+    then
+        csd_repos
+    elif [ "$feature" = "CSLM" ]
+    then
+        cslm_repos
+    elif [ "$feature" = "DST" ]
+    then
+        dst_repos
+    elif [ "$feature" = "EBSM" ]
+    then
+        ebsm_repos
+    elif [ "$feature" = "ESN" ]
+    then
+        esn_repos
+    elif [ "$feature" = "ETS" ]
+    then
+        eniq_enm_integration_repos
+    elif [ "$feature" = "GRIT" ]
+    then
+        grit_repos
+    elif [ "$feature" = "LCM" ]
+    then
+        license_control_monitoring_repos
+    elif [ "$feature" = "MODEL" ]
+    then
+        model_repos
+    elif [ "$feature" = "PMIC" ]
+    then
+        pmic_repos
+    elif [ "$feature" = "PMIC_lite" ]
+    then
+        pmic_lite_repos
+    elif [ "$feature" = "SF" ]
+    then
+        service_framework_repos
+    elif [ "$feature" = "ST" ]
+    then
+        stream_terminator_repo
+    elif [ "$feature" = "5G" ]
+    then
+        5g_repos
+    elif [ "$feature" = "TEST" ]
+    then
+        test_repos
+    else
+        echo "$feature is an invalid feature"
+        exit 1
+    fi
+
+    echo "Finished cloning Repositories"
+
+    if [ ! -z "$branchName" ]
+    then
+        echo "Changing branch to $branchName"
+        checkout_branch "$branchName"
+    fi
+
+}
+
+
+clone_repo(){
+    location=$1
+    repoName=$2
+    parent=$3
+    
+    if [ -z $parent ]
+    then
+        parent="OSS"
+    fi
+
+    echo "Cloning $repoName Project"
+
+    # only use the gerrit server instead of the gerritmirror server if the mirror has gone down.
+    #git clone ssh://"$USERNAME"@gerrit.ericsson.se:29418/"$parent"/"$location"/"$repoName"
+
+    git clone ssh://"$USERNAME"@gerritmirror.lmera.ericsson.se:29418/"$parent"/"$location"/"$repoName"
+    returnCode=$?
+
+    if [ $returnCode -ne 0 ] && [ $returnCode -ne 128 ]
+    then
+        echo ""
+        echo ""
+        echo ""
+        echo "Cloning Repo $repoName Failed"
+        echo "EXITING SCRIPT"
+        exit 25
+    else
+        scp -p -P 29418 "$USERNAME"@gerrit.ericsson.se:hooks/commit-msg "$repoName"/.git/hooks/;
+        returnCode=$?
+
+        if [ $returnCode -ne 1 ]
+        then
+            cd "$repoName"
+            git remote set-url --push origin ssh://gerrit.ericsson.se:29418/"$parent"/"$location"/"$repoName";
+            cd ..
+        else
+            echo ""
+            echo ""
+            echo ""
+            echo "Cloning Repo $repoName Failed"
+            echo "EXITING SCRIPT"
+            exit 30
+        fi
+    fi
+    echo ""
+}
+
+run_taf(){
+    feature=$1
+    tests=$2
+    TAF="TRUE"
+
+    if [ -z "$feature" ]
+    then
+        echo "Default is PMIC Feature"
+        run_taf_pmic "$tests"
+    elif [ "$feature" = "PMIC" ]
+    then
+        run_taf_pmic "$tests"
+    fi
+}
+
+
+run_taf_pmic(){
+    tests=$1
+
+    if [ -z "$tests" ]
+    then
+        run_taf_pmic_scanner_master
+    elif [ "$tests" == "SM" ]
+    then
+        run_taf_pmic_scanner_master
+    elif [ "$tests" == "load_data" ]
+    then
+        run_taf_pmic_scanner_master_load_data
+    fi
+}
+
+run_taf_pmic_scanner_master(){
+    command="mvn clean install -Dtaf.clusterId=239 -Dsuites=PMIC_Scanner_Master.xml"
+    message="Running TAF tests for PMIC Scanner Master"
+    repo="pm-test"
+
+    run_command "$command" "$message" "$repo"
+}
+
+
+run_taf_pmic_scanner_master_load_data(){
+    command="mvn clean install -Dtaf.clusterId=239 -Dsuites=Load_PMIC_Scanner_Master_Data.xml"
+    message="Loading Data for PMIC Scanner Master"
+    repo="pm-test"
+
+    run_command "$command" "$message" "$repo"
+}
+
+clean_feature(){
+    feature=$1
+
+    if [ -z "$feature" ]
+    then
+        echo "Default is CSL-M Feature"
+        clean_cslm
+    elif [ "$feature" = "CSLM" ]
+    then
+        clean_cslm
+    elif [ "$feature" = "CSD" ]
+    then
+        clean_csd
+    elif [ "$feature" = "PMIC" ]
+    then
+        clean_pmic
+    else
+        echo "$feature is an invalid feature"
+        exit 2
+    fi
+
+    echo "Finished Cleaning $feature feature"
+}
+
+build_feature(){
+    feature=$1
+    skipTests=$2
+
+    if [ -z "$feature" ]
+    then
+        echo "Default is CSL-M Feature"
+        build_cslm
+    elif [ "$feature" = "CSLM" ]
+    then
+        build_cslm "$skipTests"
+    elif [ "$feature" = "CSD" ]
+    then
+        build_csd "$skipTests"
+    elif [ "$feature" = "PMIC" ]
+    then
+        build_pmic "$skipTests"
+    elif [ "$feature" = "ESN" ]
+        then
+        build_esn "$skipTests"
+    else
+        echo "$feature is an invalid feature"
+        exit 2
+    fi
+
+    echo "Finished Building $feature feature"
+}
+
+build_esn(){
+    skipTests=$1
+    echo "Building ESN Feature"
+    echo ""
+
+    build_repository "esn-service-models" "$skipTests"
+    build_repository "esn-schema-api" "$skipTests"
+    build_repository "esn-schema-api-def" "$skipTests"
+    build_repository "esn-bus" "$skipTests"
+    build_repository "esn-coordination" "$skipTests"
+    build_repository "esn-mediation" "$skipTests"
+    build_repository "esn-forwarder" "$skipTests"
+    build_repository "esn-bus-def" "$skipTests"
+    build_repository "esn-coordination-def" "$skipTests"
+    build_repository "esn-mediation-def" "$skipTests"
+    build_repository "esn-forwarder-decoded-def" "$skipTests"
+    build_repository "esn-forwarder-undecoded-def" "$skipTests"
+    build_repository "esn-streamterminator-def" "$skipTests"
+    build_repository "esn-testware" "$skipTests"
+
+}
+
+
+build_pmic(){
+    skipTests=$1
+    echo "Building PMIC Feature"
+    echo ""
+
+    build_repository "pmic-common-module-api" "$skipTests"
+    build_repository "pmic-common-module-impl" "$skipTests"
+    build_repository "pmic-common-scanner-handler-code" "$skipTests"
+    build_repository "pmic-common-scanner-handler-model" "$skipTests"
+    build_repository "pmic-corba-handler-model" "$skipTests"
+    build_repository "pmic-corba-handler-code" "$skipTests"
+    build_repository "pmic-initiation-flow" "$skipTests"
+    build_repository "erbs-pm-handlers-model" "$skipTests"
+    build_repository "erbs-pm-handlers-code" "$skipTests"
+    build_repository "pm-service" "$skipTests"
+}
+
+
+build_cslm(){
+    skipTests=$1
+    echo "Building CSL-M Feature"
+    echo ""
+
+    build_repository "csl" "$skipTests"
+    build_repository "parsers-api" "$skipTests"
+    build_repository "parsers" "$skipTests"
+    build_repository "EpsExtensions" "$skipTests"
+}
+
+
+build_csd(){
+    skipTests=$1
+    echo "Building Cell Trace Stream Decoding and Forwarding Feature"
+    echo ""
+
+    build_repository "epsstnbi_csd" "$skipTests"
+    build_repository "cslmedinst_csd" "$skipTests"
+    build_repository "csl_csd" "$skipTests"
+    build_repository "parsers-api" "$skipTests"
+    build_repository "parsers" "$skipTests"
+    build_repository "EpsExtensions" "$skipTests"
+}
+
+
+build_feature_rpm(){
+    feature=$1
+
+    if [ -z "$feature" ]
+    then
+        echo "Default is PMIC Feature"
+        build_rpm_pmic
+    elif [ "$feature" = "PMIC" ]
+    then
+        build_rpm_pmic
+    else
+        echo "$feature is an invalid feature"
+        exit 2
+    fi
+
+    echo "Finished Building $feature feature"
+}
+
+
+build_rpm_pmic(){
+    echo "Building RPM's for PMIC"
+    build_rpm "erbs-pm-handlers-model/ERICerbspmhandlersmodel_CXP9032686"
+}
+
+
+build_repository(){
+    repo=$1
+    isSkipTests=$2
+
+    skipTestsCommand=""
+
+    if [ "$isSkipTests" = "skipTests" ]
+    then
+        skipTestsCommand="-DskipTests"
+    elif [ -z "$isSkipTests" ]
+    then
+        skipTestsCommand=""
+    else
+        echo "$isSkipTests is invalid option for build_feature command"
+        exit 11
+    fi
+
+    command="mvn clean install -U $skipTestsCommand"
+
+    message="Building Repository "
+
+    run_command "$command" "$message" "$repo"
+}
+
+
+clean_repository(){
+    repo=$1
+
+    command="mvn clean"
+
+    message="Cleaning Repository "
+
+    run_command "$command" "$message" "$repo"
+}
+
+
+clean_pmic(){
+    skipTests=$1
+    echo "Cleaning PMIC Feature"
+    echo ""
+
+    clean_repository "pmic-common-module-api" "$skipTests"
+    clean_repository "pmic-common-module-impl" "$skipTests"
+    clean_repository "pmic-common-scanner-handler-code" "$skipTests"
+    clean_repository "pmic-common-scanner-handler-model" "$skipTests"
+    clean_repository "pmic-corba-handler-model" "$skipTests"
+    clean_repository "pmic-corba-handler-code" "$skipTests"
+    clean_repository "pmic-initiation-flow" "$skipTests"
+    clean_repository "erbs-pm-handlers-model" "$skipTests"
+    clean_repository "erbs-pm-handlers-code" "$skipTests"
+    clean_repository "pm-service" "$skipTests"
+}
+
+
+clean_cslm(){
+    skipTests=$1
+    echo "Cleaning CSL-M Feature"
+    echo ""
+
+    clean_repository "csl" "$skipTests"
+    clean_repository "parsers-api" "$skipTests"
+    clean_repository "parsers" "$skipTests"
+    clean_repository "EpsExtensions" "$skipTests"
+}
+
+
+clean_csd(){
+    skipTests=$1
+    echo "Cleaning Cell Trace Stream Decoding and Forwarding Feature"
+    echo ""
+
+    clean_repository "epsstnbi_csd" "$skipTests"
+    clean_repository "cslmedinst_csd" "$skipTests"
+    clean_repository "csl_csd" "$skipTests"
+    clean_repository "parsers-api" "$skipTests"
+    clean_repository "parsers" "$skipTests"
+    clean_repository "EpsExtensions" "$skipTests"
+}
+
+
+config_git(){
+    email=$1
+    linux=$2
+    signum=$(whoami | cut -d\\ -f2);
+
+    execute_command "git --version > /dev/null 2>&1" "You must have Git Installed to run this command"
+
+    echo "Setting up GIT for user $signum"
+    execute_command "git config --global user.name \"$signum\""
+    execute_command "git config --global user.email \"$email\""
+    execute_command "git config --global http.proxy www-proxy.ericsson.se:8080"
+    execute_command "git config --global rerere.enabled 1"
+    execute_command "git config --global color.ui true"
+    execute_command "git config --global gui.encoding utf-8"
+    execute_command "git config --global push.default tracking"
+    if [ ! -z "$linux" ]
+    then
+        execute_command "git config --global core.autocrlf input"
+    else
+        execute_command "git config --global core.autocrlf input"
+    fi
+
+    execute_command "git config --list"
+
+    echo "Finished setting up GIT for user $signum"
+}
+
+config_ssh_keys(){
+    linux=$1
+    signum=$(whoami | cut -d\\ -f2);
+
+    echo "Creating ssh keys for $signum"
+    echo "You need to choose the default files"
+    echo "e.g. Windows - /c/Users/$signum/.ssh/id_rsa"
+    echo "e.g. Linux - /home/$signum/.ssh/id_rsa"
+    execute_command "ssh-keygen -t rsa"
+    echo ""
+    echo ""
+    echo ""
+    echo "Printing out generated ssh key"
+    if [ ! -z "$linux" ]
+    then
+        execute_command "cat /home/\"$signum\"/.ssh/id_rsa.pub"
+    else
+        execute_command  "cat /c/Users/\"$signum\"/.ssh/id_rsa.pub"
+    fi
+
+    echo ""
+    echo ""
+    echo ""
+    echo "THE FOLLOWING INSTRUCTIONS MUST BE RUN MANUALLY"
+    echo "Copy the ssh key in the file that is generated."
+    echo "Log into https://gerrit.ericsson.se"
+    echo "Settings -> SSH Public Keys -> Add Key"
+    echo "Paste the generated ssh key into the text box and press \"Add\"."
+}
+
+
+checkout_branch(){
+    branch=$1
+    repo=$2
+
+    FAIL_ON_ERROR="false"
+
+    command="git checkout $branch"
+    message="Checking out branch $branch in "
+
+    run_command "$command" "$message" "$repo"
+}
+
+
+create_branch(){
+    branch=$1
+    repo=$2
+    command="git checkout -b $branch"
+    message="Creating branch $branch in "
+
+    run_command "$command" "$message" "$repo"
+}
+
+
+get_status(){
+    repo=$1
+    command="git status"
+    message="Getting status for Repository "
+
+    run_command "$command" "$message" "$repo"
+}
+
+
+update_repo(){
+    repo=$1
+    command="git pull"
+    message="Updating git Repository in "
+
+    run_command "$command" "$message" "$repo"
+}
+
+update_repo_rebase(){
+    repo=$1
+    command="git pull --rebase"
+    message="Updating git Repository in "
+
+    run_command "$command" "$message" "$repo"
+}
+
+stash_changes(){
+    repo=$1
+    command="git stash"
+    message="Stashing changes in Repository "
+
+    run_command "$command" "$message" "$repo"
+}
+
+
+build_rpm(){
+    repo="$1"
+    command="mvn package rpm:rpm"
+    message="Creating RPM for "
+
+    run_command "$command" "$message" "$repo"
+}
+
+checkstyle(){
+    repo="$1"
+    command="mvn checkstyle:checkstyle-aggregate"
+    message="Running Checkstyle for "
+
+    run_command "$command" "$message" "$repo"
+}
+
+push_code(){
+    branch=$1
+    repo=$2
+    command="git push $branch"
+    message="Pushing code to $branch for Repository "
+    if [ -z "$branch" ]
+    then
+        branch="origin HEAD:refs/for/master"
+    fi
+
+    run_command "$command" "$message" "$repo"
+}
+
+push_code_for_review(){
+    branch=$1
+    repo=$2
+
+    if [ -z "$branch" ]
+    then
+        branch="master"
+    fi
+
+    gerritBranch="origin HEAD:refs/for/"
+    command="git push ${gerritBranch}${branch}"
+    message="Pushing code to $branch for repo "
+
+    run_command "$command" "$message" "$repo"
+}
+
+push_branch(){
+    branch=$1
+    repo=$2
+    origin="origin"
+
+    command="git push $origin -u ${branch}:${branch}"
+
+    run_command "$command" "$message" "$repo"
+}
+
+
+create_remote_branch(){
+    branch=$1
+    repo=$2
+
+    create_branch "$branch" "$repo"
+    push_branch "$branch" "$repo"
+}
+
+list_tags(){
+    repo="$1"
+    message="Listing tags for Repository "
+    command="git tag -l"    
+    
+    run_command "$command" "$message" "$repo"
+}
+
+checkout_tag(){
+    tag="$1"
+    repo="$2"
+    message="Checkout tag $tag for Repository "
+    command="git checkout tags/$tag"    
+    
+    run_command "$command" "$message" "$repo"
+}
+
+run_user_defined_command(){
+    command="$1"
+    message=""
+    repo="$2"
+
+    run_command "$command" "$message" "$repo"
+}
+
+correct_whitespace(){
+    checkFile="$1"
+
+    if [ "$checkFile" == "all" ]
+    then
+        files=$(ls -p | grep -v /)
+        echo $files
+        for file in $files
+        do
+            correct_whitespace_in_file "$file"
+            remove_orig_file "$file"
+        done
+    else
+        correct_whitespace_in_file "$checkFile"
+    fi
+
+    #convert_line_endings_to_lf "$checkFile"
+}
+
+remove_orig_file(){
+    file="$1"
+    origExtension=".orig"
+    command="rm ${file}${origExtension}"
+
+    execute_command "$command" "ERROR: Could not remove " "$file""$origExtension"
+}
+
+
+convert_line_endings_to_lf(){
+    checkFile="$1"
+
+    if [ "$checkFile" == "all" ]
+    then
+        convert_line_endings_to_lf_all_files
+    else
+        convert_line_endings_to_lf_single_file "$checkFile"
+    fi
+}
+
+convert_line_endings_to_lf_all_files(){
+    command="find ./ -type f -exec dos2unix {} \;"
+
+    echo "Replacing any Windows line endings to Unix line endings for all files in this directory and sub directories"
+    execute_command "$command" "ERROR: Could not replace Windows line endings"
+    echo "Windows line endings replaced"
+}
+
+convert_line_endings_to_lf_single_file(){
+    file="$1"
+    command="dos2unix ""$file"
+
+    echo "Replacing any Windows line endings to Unix line endings for: " "$file"
+    execute_command "$command" "ERROR: Could not replace Windows line endings for: " "$file"
+    echo "Windows line endings replaced for: " "$file"
+}
+
+correct_whitespace_in_file(){
+    file="$1"
+
+    if [ -e "$file" ]
+    then
+        echo "Correcting Whitespace in file:" "$file"
+        echo ""
+        replace_tabs_with_4_spaces "$file"
+        remove_trailing_spaces  "$file"
+        echo ""
+    else
+        echo "ERROR: $FILE is not a file, is unreadable or is empty"
+        usage_correct_whitespace
+    fi
+}
+
+replace_tabs_with_4_spaces(){
+    file="$1"
+    command="sed -i.orig 's/\t/    /g' $file"
+
+    echo "Removing each tab character with 4 spaces in file:" "$file"
+    execute_command "$command" "ERROR: Could not replace tabs with spaces in file: $file"
+    echo "Tabs replaceed with spaces in " "$file"
+
+}
+
+remove_trailing_spaces(){
+    file="$1"
+    command="sed -i 's/[ ]*$//' $file"
+
+    echo "Removing trailing space from file:" "$file"
+    execute_command "$command" "ERROR: Could not remove trailing spaces from file: $file"
+    echo "Trailing spaces removed from" "$file"
+}
+
+
+
+#############################
+#                            #
+#        Usage                #
+#                            #
+#############################
+usage(){
+    echo "Usage"
+    echo ""
+    usage_config_git
+    usage_config_ssh_keys
+    usage_clone
+    usage_create_local_branch
+    usage_push_branch_remote
+    usage_create_remote_branch
+    usage_checkout_branch
+    usage_pull
+    usage_pull_rebase
+    usage_push_code
+    usage_push_code_for_review
+    usage_status
+    usage_stash
+    usage_build_all_repos
+    usage_build_feature
+    usage_build_rpm
+    usage_checkstyle
+    usage_clean_repo
+    usage_clean_feature
+    usage_run_taf
+    usage_list_tags
+    usage_checkout_tag
+    usage_run_user_defined_command
+    usage_correct_whitespace
+}
+
+usage_config_git(){
+    echo "Configure GIT"
+    echo "    Configures git with standard options."
+    echo "    You must have git installed before running this option."
+    echo ""
+    echo "    Usage"
+    echo "        N.B. !!! You must be logged into your shell with your Ericsson Signum"
+    echo "        mrepo.bsh config_git <Ericsson email address> [linux]"
+    echo ""
+    echo "    Examples"
+    echo "        Setup GIT in Windows"
+    echo "            ./mrepo.bsh config_git joe.blogs@ericsson.com"
+    echo "        Setup GIT in Linux"
+    echo "            ./mrepo.bsh config_git joe.blogs@ericsson.com linux"
+    echo ""
+}
+
+
+usage_config_ssh_keys(){
+    echo "Configure SSH Keys"
+    echo "    Set up ssh keys."
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh config_ssh_keys [linux]"
+    echo "          Copy the SSH key from the id_rsa.pub file:"
+    echo "          Windows: /c/Users/<Signum>/.ssh/id_rsa.pub"
+    echo "          Linux: /home/<Signum>/.ssh/id_rsa.pub"
+    echo "          Log into gerrit https://gerrit.ericsson.se/#/settings/ssh-keys"
+    echo "          Add the key"
+    echo ""
+    echo "    Examples"
+    echo "        Setup ssh keys in Windows"
+    echo "            ./mrepo.bsh config_ssh_keys"
+    echo "        Setup ssh keys in Linux"
+    echo "            ./mrepo.bsh config_ssh_keys linux"
+    echo ""
+
+}
+
+usage_clone(){
+    echo "Cloning Repositories"
+    echo "    Clones the git repositories onto your machine."
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh clone [<Feature Name> [<Branch Name>]]"
+    echo ""
+    echo "    Supported Features"
+    echo "        5G - 5G Prototypes"
+    echo "        ASR - "
+    echo "        CSD - Cell Trace Stream Decoding and Forwarding"    
+    echo "        CSLM - CSL-M - Call Summary Log Mediation"
+    echo "        DST - Deployment Support Tool"
+    echo "        EBSM - EBS-M"
+    echo "        ESN - ESN - Event Stream NBI (North Bound Interface)"
+    echo "        ETS - ETS"
+    echo "        GRIT - Generic Rules for Information Transformation"
+    echo "        LCM - License Control Monitoring"
+    echo "        MODEL - Model Service"
+    echo "        PMIC - Performance Management Initiation and Collection"
+    echo "        PMIC_lite - Specific PMIC Repositories for Team Denali"
+    echo "        SF - Service Framework"
+    echo "        ST - Stream Terminator"
+    echo ""
+    echo "    Examples"
+    echo "        Cloning Default Repository - CSD"
+    echo "            ./mrepo.bsh clone"
+    echo ""
+    echo "        Cloning Repository - CSD"
+    echo "            ./mrepo.bsh clone CSD"
+    echo ""
+    echo "        Cloning Repository - CSL-M and checking out branch d_ASR_POC"
+    echo "            ./mrepo.bsh clone CSLM d_ASR_POC "
+    echo ""
+}
+
+usage_run_taf(){
+    echo "Run TAF"
+    echo "    Runs TAF tests for a specified Feature"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh taf <Feature Name>"
+    echo ""
+    echo "    Supported Features"
+    echo "        PMIC - Specific PMIC Repositories for Team Denali"
+    echo "             SM - Scanner Master Tests"
+    echo "             load_data - Load Data for scanner Master - copy this file into \"pm-test\ERICTAFpmic_CXP9030404\src\main\resources\suites\Load_PMIC_Scanner_Master_Data.xml\" -  Load_PMIC_Scanner_Master_Data.xml"
+    echo "    Examples"
+    echo "        Run All TAF Tests for PMIC"
+    echo "            ./mrepo.bsh taf PMIC (Currently only scanner master is supported)"
+    echo ""
+    echo "        Run Scanner Master TAF Tests for PMIC"
+    echo "            ./mrepo.bsh taf PMIC SM"
+    echo ""
+    echo "        Load Data for PMIC Scanner Master"
+    echo "            ./mrepo.bsh taf PMIC load_data"
+}
+
+
+usage_pull(){
+    echo "Pulling latest code"
+    echo "    Pulls down the latest version of the code"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh pull [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        Pulling latest code from all Repositories"
+    echo "            ./mrepo.bsh pull"
+    echo ""
+    echo "        Pulling latest code from a specific Repository"
+    echo "            ./mrepo.bsh pull esn-mediation"
+    echo ""
+}
+
+usage_pull_rebase(){
+    echo "Pulling latest code and Rebasing"
+    echo "    Pulls down the latest version of the code and rebases"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh pull_rebase [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        Pulling latest code from all Repositories"
+    echo "            ./mrepo.bsh pull_rebase"
+    echo ""
+    echo "        Pulling latest code from a specific Repository"
+    echo "            ./mrepo.bsh pull_rebase esn-mediation"
+    echo ""
+}
+
+usage_push_code(){
+    echo "Pushing code"
+    echo "    Pushes the code from the local repository to the remote repsitory"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh push [<\"Branch Name\"> [<Repository Name>]]"
+    echo ""
+    echo "    Examples"
+    echo "        Pushing all code to the master branch"
+    echo "            ./mrepo.bsh push"
+    echo ""
+    echo "        Pushing all code to another branch"
+    echo "            ./mrepo.bsh push \"dTORF-69212\""
+    echo ""
+    echo "        Pushing code for a specific Repository to another branch"
+    echo "            ./mrepo.bsh push \"dTORF-69212\" esn-mediation"
+    echo ""
+    echo "        Pushing code for a specific Repository to master branch"
+    echo "            ./mrepo.bsh push \"origin HEAD:refs/for/master\" esn-mediation"
+    echo ""
+}
+
+usage_push_code_for_review(){
+    echo "Pushing Code for Review"
+    echo "    Pushes the Code for Review"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh push_review [<\"Branch Name\"> [<Repository Name>]]"
+    echo ""
+    echo "    Examples"
+    echo "        Pushing all code to the master branch"
+    echo "            ./mrepo.bsh push_review"
+    echo ""
+    echo "        Pushing all code to another branch"
+    echo "            ./mrepo.bsh push_review dTORF-69212"
+    echo ""
+    echo "        Pushing code for a specific Repository to another branch"
+    echo "            ./mrepo.bsh push_review dTORF-69212 esn-mediation"
+    echo ""
+    echo "        Pushing code for a specific Repository to master branch"
+    echo "            ./mrepo.bsh push_review master esn-mediation"
+    echo ""
+}
+
+usage_push_branch_remote(){
+    echo "Push Branch to Remote"
+    echo "    Pushes the local branch to the remote repository"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh push_branch <Branch Name> [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        Push Branch to Remote for all Repositories"
+    echo "            ./mrepo.bsh push_branch dTORF-69212"
+    echo ""
+    echo "        Push Branch to Remote for a specific Repository"
+    echo "            ./mrepo.bsh push_branch dTORF-69212 esn-mediation"
+    echo ""
+}
+
+usage_status(){
+    echo "Getting the status of your Repositories"
+    echo "    Shows the status of the repositories"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh status [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        Getting the status of all Repositories"
+    echo "            ./mrepo.bsh status"
+    echo ""
+    echo "        Getting the status of a specific Repository"
+    echo "            ./mrepo.bsh status esn-mediation"
+    echo ""
+}
+
+usage_stash(){
+    echo "Stash Changes"
+    echo "    Stashes the code"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh stash [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        Stash Changes of all Repositories"
+    echo "            ./mrepo.bsh stash"
+    echo ""
+    echo "        Stash Changes of a specific Repository"
+    echo "            ./mrepo.bsh stash esn-mediation"
+    echo ""
+}
+
+usage_build_repos(){
+    echo "Build Code using maven"
+    echo "    Builds the repositories in the directory or builds a specific repository"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh build [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        Build all Repositories"
+    echo "            ./mrepo.bsh build"
+    echo ""
+    echo "        Build specific Repository"
+    echo "            ./mrepo.bsh build esn-mediation"
+    echo ""
+}
+
+usage_build_feature(){
+    echo "Build Feature using maven"
+    echo "    Builds specific repositories defined for a feature - It may not build all the repositories"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh build_feature [<Feature Name>]"
+    echo ""
+    echo "    Supported Features"
+    echo "        CSLM - CSL-M (Call Summary Log Mediation)"
+    echo "        CSD - Cell Trace Stream Decoding and Forwarding"
+    echo "        ESN - ESN - Event Stream NBI (North Bound Interface)"
+    echo "        PMIC - Performance Management Initiation and Collection"
+    echo ""
+    echo "    Examples"
+    echo "        Build CSL-M Feature"
+    echo "            ./mrepo.bsh build_feature CSLM"
+    echo ""
+}
+
+usage_checkstyle(){
+    echo "Generating a Check Style Report"
+    echo "    Generates a Check Style Report in /target/site/checkstyle-aggregate.html at the top level of the repository"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh checkstyle [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        Generate a Check Style Report for All Repositories"
+    echo "            ./mrepo.bsh checkstyle"
+    echo ""
+    echo "        Generate a Check Style Report for a specific Repository"
+    echo "            ./mrepo.bsh checkstyle esn-mediation"
+    echo ""
+}
+
+usage_clean_repo(){
+    echo "Clean Repository using maven"
+    echo "    Cleans the repositories in the directory or cleans a specific repository"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh clean [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        Clean All Repositories"
+    echo "            ./mrepo.bsh clean"
+    echo ""
+    echo "        Clean a Specific Repository"
+    echo "            ./mrepo.bsh clean esn-mediation"
+    echo ""
+}
+
+usage_clean_feature(){
+    echo "Clean Feature using maven"
+    echo "    Cleans specific repositories defined for a feature - It may not clean all the repositories"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh clean_feature [<Feature Name>]"
+    echo ""
+    echo "    Supported Features"
+    echo "        CSLM - CSL-M (Call Summary Log Mediation)"
+    echo "        CSD - Cell Trace Stream Decoding and Forwarding"
+    echo "        PMIC - N.B. - This is still in progress so it will not fully build the feature"
+    echo ""
+    echo "    Examples"
+    echo "        Build CSL-M Feature"
+    echo "            ./mrepo.bsh clean_feature CSLM"
+    echo ""
+}
+
+usage_build_rpm(){
+    echo "Build RPM"
+    echo "    Creates RPM files for any repository or module in a repository with whose directory has the format ERIC*"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh build_rpm [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        Build RPM for all Repositories"
+    echo "            ./mrepo.bsh build_rpm"
+    echo ""
+    echo "        Build RPM for a specific Repositories"
+    echo "            ./mrepo.bsh build_rpm epsstnbi"
+    echo ""
+    echo "        Build RPM for a specific Repository"
+    echo "            ./mrepo.bsh build_rpm erbs-pm-handlers-model/ERICerbspmhandlersmodel_CXP9032686"
+    echo ""
+}
+
+usage_create_local_branch(){
+    echo "Create Local Branch"
+    echo "    Creates a local branch"
+    echo "    You must run to push this local branch to the remote."
+    echo "    You can create a remote branch by running - Push Branch to Remote"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh create <Branch Name> [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        Create Branch for all Repositories"
+    echo "            ./mrepo.bsh create dTORF-69212"
+    echo ""
+    echo "        Create Branch for a specific Repository"
+    echo "            ./mrepo.bsh create dTORF-69212 esn-mediation"
+    echo ""
+}
+
+usage_create_remote_branch(){
+    echo "Create Remote Branch"
+    echo "    Creates a branch on the remote repository"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh create_remote_branch <Branch Name> [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        Create Remote Branch for all Repositories"
+    echo "            ./mrepo.bsh create_remote_branch dTORF-69212"
+    echo ""
+    echo "        Create Remote Branch for a specific Repository"
+    echo "            ./mrepo.bsh create_remote_branch dTORF-69212 esn-mediation"
+    echo ""
+}
+
+usage_checkout_branch(){
+    echo "Checkout Branch"
+    echo "    Changes the repository/repositories to the branch you specify"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh checkout <Branch Name> [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        Changing Branch for all Repositories"
+    echo "            ./mrepo.bsh checkout dTORF-69212"
+    echo ""
+    echo "        Changing Branch for a specific Repository"
+    echo "            ./mrepo.bsh checkout dTORF-69212 esn-mediation"
+    echo ""
+}
+
+usage_list_tags(){
+    echo "List Tags in a Repository"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh list_tags [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        List tag for All Repositories"
+    echo "            ./mrepo.bsh list_tags"
+    echo ""
+    echo "        List tag for a specific  Repository"
+    echo "            ./mrepo.bsh list_tags pm-service"
+}
+
+usage_checkout_tag(){
+    echo "Checkout Tag for a Repository"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh checkout_tag <Tag Name> [<Repository Name>]"
+    echo ""
+    echo "    Examples"
+    echo "        Checkout tag for All Repositories"
+    echo "            ./mrepo.bsh checkout_tag esn-bus-def-1.0.1"
+    echo ""
+    echo "        Checkout tag for a specific  Repository"
+    echo "            ./mrepo.bsh checkout_tag esn-bus-def-1.0.1 esn-bus-def"
+
+}
+
+usage_correct_whitespace(){
+    echo "Correct Whitespace in a file - Replace tabs with 4 spaces, remove Trailing spaces"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh correct_whitespace <File>"
+    echo ""
+    echo "    Examples"
+    echo "        Correct the whitespace in pom.xml"
+    echo "            ./mrepo.bsh correct_whitespace pom.xml"
+    echo ""
+    echo "        Correct the whitespace in all files in a directory (not recursive)"
+    echo "            ./mrepo.bsh correct_whitespace all"
+    echo ""
+}
+
+usage_run_user_defined_command(){
+    echo "Run a user defined command"
+    echo "    Runs a user defined command on a specific Repository or all the Repositories"
+    echo ""
+    echo "    Usage"
+    echo "        mrepo.bsh command \"<command>\" [<Repository>]"
+    echo "            IMPORTANT - You must encase the command in commas to avoid an issues with spaces being concidered another argument"
+    echo ""
+    echo "    Examples"
+    echo "        Run a user defined command for all Repositories e.g. ls -ltrah"
+    echo "            ./mrepo.bsh command \"ls -ltrah\""
+    echo ""
+    echo "        Run a user defined command for a specific Repository"
+    echo "            ./mrepo.bsh command \"ls -ltrah\" pm-service"
+    echo ""
+}
+
+#############################
+#                            #
+#        Input Checks        #
+#                            #
+#############################
+
+if [ "$1" == "config_git" ]
+then
+    config_git "$2" "$3"
+elif [ "$1" == "config_ssh_keys" ]
+then
+    config_ssh_keys "$2"
+elif [ "$1" == "clone" ]
+then
+    clone_repos "$2" "$3"
+elif [ "$1" == "taf" ]
+then
+    run_taf "$2" "$3"
+elif [ "$1" == "pull" ]
+then
+    update_repo "$2"
+elif [ "$1" == "pull_rebase" ]
+then
+    update_repo_rebase "$2"
+elif [ "$1" == "push" ]
+then
+    push_code "$2" "$3"
+elif [ "$1" == "push_review" ]
+then
+    push_code_for_review "$2" "$3"
+elif [ "$1" == "push_branch" ]
+then
+    push_branch "$2" "$3"
+elif [ "$1" == "status" ]
+then
+    get_status "$2"
+elif [ "$1" == "stash" ]
+then
+    stash_changes "$2"
+elif [ "$1" == "build_rpm" ]
+then
+    build_rpm "$2" "$3"
+elif [ "$1" == "build" ]
+then
+    build_repository "$2" "$3"
+elif [ "$1" == "build_feature" ]
+then
+    build_feature "$2" "$3"
+elif [ "$1" == "checkstyle" ]
+then
+    checkstyle "$2"
+elif [ "$1" == "clean" ]
+then
+    clean_repository "$2"
+elif [ "$1" == "clean_feature" ]
+then
+    clean_feature "$2" "$3"
+elif [ "$1" == "build_feature_rpm" ]
+then
+    build_feature_rpm "$2" "$3"
+elif [ "$1" == "create" ]
+then
+    create_branch "$2" "$3"
+elif [ "$1" == "create_remote_branch" ]
+then
+    create_remote_branch "$2" "$3"
+elif [ "$1" == "checkout" ]
+then
+    checkout_branch "$2" "$3"
+elif [ "$1" == "list_tags" ]
+then
+    list_tags "$2"
+elif [ "$1" == "checkout_tag" ]
+then
+    checkout_tag "$2" "$3"
+elif [ "$1" == "correct_whitespace" ]
+then
+    correct_whitespace "$2" "$3"
+
+elif [ "$1" == "command" ]
+then
+    run_user_defined_command "$2" "$3"
+else
+    usage
+fi

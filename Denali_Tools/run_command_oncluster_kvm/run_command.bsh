@@ -1,0 +1,306 @@
+#!/bin/bash
+ROOT_KNOWN_HOSTS_FILE="/root/.ssh/known_hosts"
+
+LITP_ADMIN_USER="litp-admin"
+CLOUD_USER="cloud-user"
+ROOT_USER="root"
+
+KVM_PASSWORD="passw0rd"
+CLUSTER_PASSWORD="12shroot"
+
+SERVER_NAME=""
+SERVER_LOGIN_USER_NAME=""
+usage(){
+    _msg_="$@"
+    scriptname=$(basename $0)
+
+cat<<-EOF
+
+
+Command Arguments:
+
+-x
+    Command to run on the server
+        Mandatory Argument
+        This indicates you are going to deploy an rpm
+        If the command has a space in it, it MUST be encased in double quotes
+        e.g. -x "ps -ef"
+        You can run more than one command at a time by seperating it with semi-colons
+        e.g. -x "ps -ef; ls -ltrah"
+
+    You must choose to use either a KVM or a Cluster to run the command.
+    -k
+        The name of KVM to run the command on
+        Mandatory argument for -x
+        e.g. svc-1-fmx
+       
+    -c
+        the name of the Cluster to run the command on
+        Mandatory argument for -x
+        This is the name of the cluster
+        e.g. svc-1
+
+    -r
+        If you add this switch, the command will be run as root.
+        Otherwise either cloud-user(KVM) or litp-admin(Cluster) will be selected as the user to run the command.
+        Optional argument for -x
+        
+-h
+    Optional argument
+    Display this usage.
+
+
+Examples:
+
+ Run a command on the svc-1-fmx KVM as root user
+ # $scriptname -k svc-1-fmx -r -c "ls -l /var/tmp"
+ 
+ Run a command on the svc-1-fmx KVM as cloud-admin user
+ # $scriptname -k svc-1-fmx -c "ls -l /var/tmp"
+
+ Run a command on the svc-1 Cluster as root user
+ # $scriptname -k svc-1-fmx -r -c "ls -l /var/tmp"
+ 
+ Run a command on the svc-1 Cluster as litp-admin user
+ # $scriptname -k svc-1-fmx -c "ls -l /var/tmp"
+
+EOF
+}
+
+# Called when script is executed with invalid arguments
+invalid_arguments() {
+    scriptname=$(basename $0)
+    echo "Missing or invalid option(s):"
+    echo "$@"
+    echo "Try $scriptname --help for more information"
+    usage
+    exit 2
+}
+
+check_arguments(){
+    check_command_set
+    check_kvm_cluster_set
+    check_root_user_set
+}
+
+
+check_command_set(){
+    if [ -z "$COMMAND" ]
+    then
+        invalid_arguments "Expected -x"
+    fi
+}
+
+
+check_kvm_cluster_set(){
+    missing_kvm_set
+    both_kvm_cluster_set
+}
+
+missing_kvm_set(){
+    if [ -z "$CLUSTER_NAME" ] && [ -z "$KVM_NAME" ]
+    then
+        invalid_arguments "Expected either -k or -c"
+    fi
+}
+
+both_kvm_cluster_set(){
+    if [ ! -z "$CLUSTER_NAME" ] && [ ! -z "$KVM_NAME" ]
+    then
+        invalid_arguments "Both -k and -c cannot be set at the same time"
+    fi
+}
+
+check_root_user_set(){
+    if [ ! -z "$ROOT_USER_SET" ]
+    then
+        USER_NAME="$ROOT_USER"
+    else
+        if [ ! -z "$CLUSTER_NAME" ]
+        then
+            USER_NAME="$LITP_ADMIN_USER"
+        else
+            USER_NAME="$CLOUD_USER"
+        fi
+    fi
+}
+
+remove_known_hosts(){
+    # remove known hosts file before running so we know what the expect response will be for the ssh connection
+    # if we don't reomve this file there are 3 possible outcomes from starting ssh connection:
+    # i)there is no key (what we want), ii)there is an existing key and we will just be prompted for the password or iii)there is an old key that will cause the connection to fail
+    # so by removing your ensuring that there will be no key
+    if [ -f ${ROOT_KNOWN_HOSTS_FILE} ]; then
+        echo "Removing ${ROOT_KNOWN_HOSTS_FILE}"
+        /bin/rm ${ROOT_KNOWN_HOSTS_FILE}
+    fi
+}
+
+run_command_as_root_kvm(){    
+    echo "Running \"${COMMAND}\" on $SERVER_NAME KVM as $USER_NAME user"
+expect <<EOFKVM_COMMAND
+set timeout -1
+spawn \$env(SHELL)
+match_max 100000
+send -- "ssh -i /root/.ssh/vm_private_key $SERVER_LOGIN_USER_NAME@$SERVER_NAME\r"
+expect "Are you sure you want to continue connecting (yes/no)? "
+send -- "yes\r"
+send -- "su - $ROOT_USER\r"
+expect "Password: "
+send -- "$ROOT_PASSWORD\r"
+expect "]# "
+send -- "$COMMAND\r"
+send -- "exit\r"
+expect "]$ "
+send -- "exit\r"
+EOFKVM_COMMAND
+    if [ $? -ne 0 ]; then
+        echo "Expect commands did not execute successfully when listing the Ericsson packages on the $SERVER_NAME KVM as $USER_NAME user"
+    else
+        echo "Successfully ran command $COMMAND on $SERVER_NAME"
+    fi
+}
+
+run_command_as_root_cluster(){    
+    echo "Running \"${COMMAND}\" on $SERVER_NAME KVM as $USER_NAME user"
+    echo $COMMAND
+expect <<EOFKVM_COMMAND
+set timeout -1
+spawn \$env(SHELL)
+match_max 100000
+send -- "ssh -i /root/.ssh/vm_private_key $SERVER_LOGIN_USER_NAME@$SERVER_NAME\r"
+expect "Are you sure you want to continue connecting (yes/no)? "
+send -- "yes\r"
+expect "password: "
+send -- "$CLUSTER_PASSWORD\r"
+send -- "su - $ROOT_USER\r"
+expect "Password: "
+send -- "$ROOT_PASSWORD\r"
+expect "]# "
+send -- "$COMMAND\r"
+send -- "exit\r"
+expect "]$ "
+send -- "exit\r"
+EOFKVM_COMMAND
+    if [ $? -ne 0 ]; then
+        echo "Expect commands did not execute successfully when listing the Ericsson packages on the $SERVER_NAME KVM as $USER_NAME user"
+    else
+        echo "Successfully ran command $COMMAND on $SERVER_NAME"
+    fi
+}
+
+run_command_as_default_user_kvm(){    
+    echo "Running \"${COMMAND}\" on $SERVER_NAME KVM as $USER_NAME user"
+expect <<EOFKVM_COMMAND
+set timeout -1
+spawn \$env(SHELL)
+match_max 100000
+send -- "ssh -i /root/.ssh/vm_private_key $SERVER_LOGIN_USER_NAME@$SERVER_NAME\r"
+expect "Are you sure you want to continue connecting (yes/no)? "
+send -- "yes\r"
+expect "]$ "
+send -- "$COMMAND\r"
+send -- "exit\r"
+expect "]$ "
+EOFKVM_COMMAND
+    if [ $? -ne 0 ]; then
+        echo "Expect commands did not execute successfully when listing the Ericsson packages on the $SERVER_NAME KVM as $USER_NAME user"
+    else
+        echo "Successfully ran command $COMMAND on $SERVER_NAME as $USER_NAME"
+    fi
+}
+
+run_command_as_default_user_cluster(){    
+    echo "Running \"${COMMAND}\" on $SERVER_NAME KVM as $USER_NAME user"
+expect <<EOFKVM_COMMAND
+set timeout -1
+spawn \$env(SHELL)
+match_max 100000
+send -- "ssh -i /root/.ssh/vm_private_key $SERVER_LOGIN_USER_NAME@$SERVER_NAME\r"
+expect "Are you sure you want to continue connecting (yes/no)? "
+send -- "yes\r"
+expect "password: "
+send -- "$CLUSTER_PASSWORD\r"
+expect "]$ "
+send -- "$COMMAND\r"
+send -- "exit\r"
+expect "]$ "
+EOFKVM_COMMAND
+    if [ $? -ne 0 ]; then
+        echo "Expect commands did not execute successfully when listing the Ericsson packages on the $SERVER_NAME KVM as $USER_NAME user"
+    else
+        echo "Successfully ran command $COMMAND on $SERVER_NAME as $USER_NAME"
+    fi
+}
+
+
+run_command(){
+    if [ "$USER_NAME" == "$ROOT_USER" ]
+    then
+        run_command_as_root
+    else
+        run_command_as_default_user
+    fi
+}
+
+main(){
+    if [ ! -z $KVM_NAME ]
+    then
+        SERVER_NAME="$KVM_NAME"
+        SERVER_LOGIN_USER_NAME="$CLOUD_USER"
+        ROOT_PASSWORD="$KVM_PASSWORD"
+        
+        if [ "$USER_NAME" == "$ROOT_USER" ]
+        then
+            run_command_as_root_kvm
+        else
+            run_command_as_default_user_kvm
+        fi
+    fi
+    
+    if [ ! -z $CLUSTER_NAME ]
+    then
+        SERVER_NAME="$CLUSTER_NAME"
+        SERVER_LOGIN_USER_NAME="$LITP_ADMIN_USER"
+        ROOT_PASSWORD="$CLUSTER_PASSWORD"
+        if [ "$USER_NAME" == "$ROOT_USER" ]
+        then
+            run_command_as_root_cluster
+        else
+            run_command_as_default_user_cluster
+        fi
+    fi
+}
+
+#####################################
+############### main ################
+#####################################
+
+# Process the arguments passed to the script
+
+while getopts "rhk:x:c:" opt; do
+    case $opt in
+        x) 
+            COMMAND="$OPTARG"
+            echo $COMMAND
+            ;;
+        c)
+            CLUSTER_NAME="$OPTARG"
+            ;;
+        k)
+            KVM_NAME="$OPTARG"
+            ;;
+        r)
+            ROOT_USER_SET="TRUE"
+            ;;
+        h)
+            usage
+            exit 0
+            ;;
+    esac
+done
+    
+check_arguments
+remove_known_hosts
+
+main

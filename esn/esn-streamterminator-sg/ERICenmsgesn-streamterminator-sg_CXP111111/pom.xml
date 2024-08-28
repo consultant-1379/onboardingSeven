@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.ericsson.oss.servicegroupcontainers</groupId>
+    <artifactId>esn-streamterminator-sg</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.ericsson.oss.servicegroupcontainers</groupId>
+  <artifactId>ERICenmsgesnstreamterminatorsg_CXP111111</artifactId> <!-- TODO: Change to new CXP number when created-->
+  <packaging>${rpm.packaging}</packaging>
+  <name>esn-streamterminator-sg feature CXP module</name>
+  <properties>
+    <publish_artifact>true</publish_artifact>
+    <com.ericsson.oss.rpm.architecture>noarch</com.ericsson.oss.rpm.architecture>
+    <rpm-root>opt</rpm-root>
+    <comp-name>ericsson</comp-name>
+    <install-path>com.ericsson.oss.ci-archetypes</install-path>
+    <install-path>com.ericsson.oss.servicegroupcontainers.esn-streamterminator-sg</install-path>
+    <media.category>service</media.category>    <!-- TODO: Change to new media type when created-->
+  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.ericsson.oss.itpf.deployment</groupId>
+        <artifactId>deployment-descriptor-plugin</artifactId>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>configurable-entity</goal>
+                </goals>
+            </execution>
+        </executions>
+        <configuration>
+            <configEntity>
+                <stereotype>SERVICE_PKG</stereotype> <!--TODO: Change to new stereotype when created?-->
+                <parameters>
+                <property name="vm_service_name" defaultValue="msstr1" />
+                    <itemType name="vm-package">
+                        <property name="name" defaultValue="ERICenmsgesnstreamterminatorsg_CXP111111" /> <!-- TODO: Change to new CXP number when created-->
+                    </itemType>
+                </parameters>
+                <deploymentDependencies>
+                    <deploymentDependency>
+                        <groupId>com.ericsson.oss.itpf.deployment.tools</groupId>
+                        <artifactId>virtual-machine</artifactId>
+                        <qualifier>CONTAINER</qualifier>
+                        <alias>streamterminator-vm-1</alias>
+                    </deploymentDependency>
+                    <!-- TODO: The following will be added at a later date
+                    <deploymentDependency>
+                        <artifact></artifact>
+                        <group></group>
+                        <version>latest</version>
+                        <alias>model_repository</alias>
+                    </deploymentDependency>
+                    <deploymentDependency>
+                        <artifact></artifact>
+                        <group></group>
+                        <version></version>
+                        <alias>ddc_share</alias>
+                    </deploymentDependency>
+                    -->
+                </deploymentDependencies>
+                <assignments>
+                    <assign>
+                        <path>streamterminator-vm-1</path>
+                        <!-- <property name="cluster_name" value="services" /> --> <!-- TODO: Change the cluster value when the cluster becomes available -->
+                        <property name="routable_interfaces" value="0" />
+                        <itemType name="vm-service">
+                            <property name="service_name" value="msstr1" />
+                            <property name="cpus" value="2" />
+                            <property name="ram" value="4096M" />
+                            <property name="image_name" value="lsb-image" />
+                        </itemType>
+                        <itemType name="vcs-clustered-service">
+                            <property name="active" value="1" />
+                            <property name="standby" value="0" /> <!-- no HA for the moment TODO: Change this to use HA -->
+                        </itemType>
+                    </assign>
+                </assignments>
+            </configEntity>
+        </configuration>
+    </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>rpm-maven-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <skip>true</skip>
+          <inherited>true</inherited>
+          <copyright>2016 Ericsson AB All rights reserved</copyright>
+          <description>${ericsson.rstate}</description>
+          <group>ERI-NMS</group>
+          <vendor>Ericsson AB</vendor>
+          <url>www.ericsson.com</url>
+          <requires>
+              <require>ERICpmstreaming_CXP9030306</require>
+          </requires>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

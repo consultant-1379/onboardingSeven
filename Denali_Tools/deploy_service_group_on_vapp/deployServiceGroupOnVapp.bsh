@@ -1,0 +1,641 @@
+#!/bin/bash
+
+LOG_DIR=$(dirname $0)
+LOG_FILE=${LOG_DIR}/$(basename $0 | awk -F"." {'print $1'}).log
+ROOT_KNOWN_HOSTS_FILE="/root/.ssh/known_hosts"
+SVC_USER="litp-admin"
+KVM_PWD="passw0rd"
+SVC_PWD="12shroot"
+KVM_IP_ADDRESS=""
+
+check_root_user(){
+    # Check user is root before doing anything else.
+    [[ "$EUID" -ne 0 ]] && { echo "Only root user can run this script." ; exit 1; }
+}
+
+check_root_user
+
+usage(){
+    _msg_="$@"
+    scriptname=$(basename $0)
+
+cat<<-EOF
+
+
+Command Arguments:
+
+-d, --deploy
+    Optional Argument
+    This indicates you are going to deploy an rpm
+
+    -r, --rpm
+        Mandatory argument for -d, --deploy
+        This specifies the name of the RPM you want to deploy
+        You only need the name up until the CXP number.
+
+    -a, -alias
+        Mandatory argument for -d, --deploy
+        This is the name of the service you are deploying
+        
+    -k, --kvm
+        Mandatory argument for -d, --deploy
+        This is the name of the KVM you are going to replace
+
+    -s, --servicename
+        Mandatory argument for -d, --deploy
+        This is the name of the service that will be started
+        
+    -c, --cluster
+        Mandatory argument for -d, --deploy
+        This is the name of the cluster
+        e.g. svc-1
+
+-u, --reset
+    Optional argument
+    This indicates you are going to reset the service group
+        
+    -k, --kvm
+        Mandatory argument for -u, --reset
+        This is the name of the KVM you are going to reset
+        
+-w, --watch
+    Optional argument
+    This will watch the kvm.
+    It will display 1 when it comes online
+    
+    -k, --kvm
+        Mandatory argument for -w, --watch
+        This is the name of the KVM you are going to watch
+        
+
+-l, --list
+    Optional argument
+    This will list kvm's on a cluster.
+    
+    -c, --cluster
+        Mandatory argument for -l, --list
+        This is the name of the cluster
+        e.g. svc-1
+        
+     -k, --kvm
+        Optional argument for -l, --list
+        This will print the Ericsson Packages on the KVM
+       
+-h, --help
+    Optional argument
+    Display this usage.
+
+
+Examples:
+
+ Deploy an RPM
+ # $scriptname --deploy --kvm fmx --rpm ERICenmsgesnmediationdef_CXP9032771 --alias apeps --servicename apeps
+ # $scriptname -d -k fmx -r ERICenmsgesnmediationdef_CXP9032771 -a apeps -s apeps
+
+ Reset Service Group KVM
+ # $scriptname -u -k fmx
+ # $scriptname --reset --kvm fmx
+
+ Watch the kvm to see when it comes online
+ # $scriptname -w -k fmx
+ # $scriptname --watch --kvm fmx
+ 
+ List KVM's on a Cluster
+ # $scriptname -l -c svc-1
+ # $scriptname --list --cluster svc-1
+ 
+EOF
+}
+
+# Print a message to screen and logfile
+print_log_msg(){
+    log_msg=${1}
+    time_stamp=$(date +"%a %d %b %Y %H:%M:%S")
+
+    echo "${time_stamp}: ${log_msg}" | /usr/bin/tee -a ${LOG_FILE}
+}
+
+
+# Called when script is executed with invalid arguments
+invalid_arguments() {
+    scriptname=$(basename $0)
+    echo "Missing or invalid option(s):"
+    echo "$@"
+    echo "Try $scriptname --help for more information"
+    usage
+    exit 1123
+}
+
+# Process the arguments passed to the script
+process_arguments() {
+    short_args="duwlhur:a:k:c:s:"
+    long_args="deploy,watch,reset,list,help,rpm:,alias:,kvm:,cluster:,servicename:"
+
+    args=$(getopt -o $short_args -l $long_args -n "$0"  -- "$@"  2>&1 )
+    [[ $? -ne 0 ]] && invalid_arguments $( echo " $args"| head -1 )
+    [[ $# -eq 0 ]] && invalid_arguments "No options provided"
+    eval set -- "$args"
+    cmd_arg="$0"
+
+    while true; do
+        case "$1" in
+             -d|--deploy)
+                export DEPLOY="true"
+                shift
+                ;;
+             -u|--reset)
+                export RESET="true"
+                shift
+                ;;
+             -w|--watch)
+                export WATCH="true"
+                shift
+                ;;
+             -l|--list)
+                export LIST_KVMS="true"
+                shift
+                ;;             
+             -s|--servicename)
+                export SERVICE_NAME="true"
+                shift 2
+                ;;
+             -h|--help)
+                usage
+                exit 0
+                ;;
+             -r|--rpm)
+                export RPM_FILE=$2
+                shift 2
+                ;;
+             -a|--alias)
+                export FEATURE_ALIAS=$2
+                shift 2
+                ;;
+             -k|--kvm)
+                export KVM_NAME=$2
+                shift 2
+                ;;
+             -c|--cluster)
+                export CLUSTER_NAME=$2
+                shift 2
+                ;;
+             --)
+                shift
+                break ;;
+             *)
+                echo BAD ARGUMENTS # perhaps error
+                break ;;
+          esac
+    done
+
+
+    if [ -z "$DEPLOY" ] && [ -z "$RESET" ] && [ -z "$WATCH" ] $$ [ -z "$LIST_KVMS" ]
+    then
+        invalid_arguments "Expected either -d|--deploy or -u|--reset or -w|--watch"
+    fi
+
+    
+    if [ ! -z "$LIST_KVMS" ]
+    then
+        check_list_arguments
+    fi    
+    
+    if [ ! -z "$WATCH" ]
+    then
+        check_watch_arguments
+    fi
+    
+    if [ ! -z "$DEPLOY" ]
+    then
+        check_deploy_arguments
+    fi
+
+    if [ ! -z "$RESET" ]
+    then
+        check_reset_arguments
+    fi
+
+    # Ensure no extra parameters are added
+    if [[ ${#@} -gt 0 ]]; then
+        echo "$(date +"%a %d %b %Y %H:%M:%S") Unexpected positional arguments added" >> ${LOG_FILE}
+        invalid_arguments "Unexpected positional arguments added: ${@}"
+    fi
+
+    echo "$(date +"%a %d %b %Y %H:%M:%S") Input Arguments processed successfully" >> ${LOG_FILE}
+}
+
+
+check_list_arguments(){
+    check_kvm_argument
+    fail_if_watch
+    fail_if_deploy
+    fail_if_reset
+}
+
+check_watch_arguments(){
+    check_kvm_argument
+    fail_if_deploy
+    fail_if_reset
+    fail_if_list
+}
+
+check_reset_arguments(){
+    check_kvm_argument
+    fail_if_deploy
+    fail_if_watch
+    fail_if_list
+}
+
+check_deploy_arguments(){
+    check_rpm_file_argument
+    check_alias_argument
+    check_kvm_argument
+    fail_if_reset
+    fail_if_watch
+    fail_if_list
+}
+
+
+fail_if_list(){
+    if [ ! -z $LIST_KVMS ]
+    then
+        invalid_arguments "ERROR: You cannot use -l|--list with with -d|--deploy, -w|--watch, -u|--reset at the same time"
+        exit 44
+    fi
+}
+
+fail_if_reset(){
+    if [ ! -z $RESET ]
+    then
+        invalid_arguments "ERROR: You cannot use -u|--reset with -d|--deploy, -w|--watch, -l|--list  at the same time"
+        exit 55
+    fi
+}
+
+fail_if_deploy(){
+    if [ ! -z $DEPLOY ]
+    then
+        invalid_arguments "ERROR: You cannot use -d|--deploy with -u|--reset, -w|--watch, -l|--list  at the same time"
+        exit 66
+    fi
+}
+
+fail_if_watch(){
+    if [ ! -z $WATCH ]
+    then
+        invalid_arguments "ERROR: You cannot use -w|--watch with -d|--deploy and/or -u|--reset at the same time"
+        exit 77
+    fi
+}
+
+check_rpm_file_argument(){
+if [ -z "$RPM_FILE" ]
+    then
+        invalid_arguments "ERROR: Rpm file has not been specified"
+        exit 88
+    fi
+}
+
+check_alias_argument(){
+    if [ -z "$FEATURE_ALIAS" ]
+    then
+        invalid_arguments "ERROR: Feature Alias has not been specified"
+        exit 2
+    fi
+}
+
+check_kvm_argument(){
+    if [ -z "$KVM_NAME" ]
+    then
+        invalid_arguments "ERROR: KVM Name has not been specified"
+        exit 2
+    fi
+    
+    set_kvm_ipaddress
+}
+
+check_cluster_argument(){
+    if [ -z "$CLUSTER_NAME" ]
+    then
+        invalid_arguments "ERROR: Cluster Name has not been specified"
+        exit 2
+    fi
+}
+
+turn_off_health_check(){
+    echo "Turning off Health check"
+    mv /usr/lib/ocf/resource.d/jboss_healthcheck.sh /var/tmp/
+    if [ $? -ne 0 ]
+    then
+        echo "Health check was already turned off"
+    fi
+}
+
+turn_on_health_check(){
+    echo "Turning on health check"
+    mv /var/tmp/jboss_healthcheck.sh /usr/lib/ocf/resource.d/
+    
+    if [ $? -ne 0 ]
+    then
+        echo "Health Check was not turned off."
+    fi
+}
+
+remove_known_hosts(){
+    # remove known hosts file before running so we know what the expect response will be for the ssh connection
+    # if we don't reomve this file there are 3 possible outcomes from starting ssh connection:
+    # i)there is no key (what we want), ii)there is an existing key and we will just be prompted for the password or iii)there is an old key that will cause the connection to fail
+    # so by removing your ensuring that there will be no key
+    if [ -f ${ROOT_KNOWN_HOSTS_FILE} ]; then
+        print_log_msg "Removing ${ROOT_KNOWN_HOSTS_FILE}"
+        /bin/rm ${ROOT_KNOWN_HOSTS_FILE}
+    fi
+}
+
+deploy_rpm_on_jboss_kvm(){
+    kvm_name="$KVM_NAME"
+    
+    print_log_msg "Removing $kvm_name on $CLUSTER_NAME cluster and deploying $RPM_FILE on $kvm_name Service Group KVM"
+expect <<EOFFEATURE
+set timeout -1
+spawn \$env(SHELL)
+match_max 100000
+send -- "ssh -i /root/.ssh/vm_private_key cloud-user@$CLUSTER_NAME-$kvm_name\r"
+expect "Are you sure you want to continue connecting (yes/no)? "
+send -- "yes\r"
+send -- "su - root\r"
+expect "Password: "
+send -- "$KVM_PWD\r"
+expect "]# "
+send -- "/bin/rm -rf /usr/lib/ocf/resource.d/*\r"
+expect "]# "
+send -- "find /ericsson/3pp/jboss/standalone/deployments/ -name $kvm_name* | xargs /bin/rm -rf\r"
+expect "]# "
+send -- "yum list installed | grep -v thirdparty | grep ERIC | cut -d ' ' -f1 | xargs yum remove -y\r"
+expect "]# "
+send -- "service jboss stop\r"
+expect "]# "
+send -- "yum clean all\r"
+expect "]# "
+send -- "yum install -y ${RPM_FILE}\r"
+expect "]# "
+send -- "/bin/rm -rf /usr/lib/ocf/resource.d/*\r"
+expect "]# "
+send -- "echo \"$IP_ADDRESS  ${FEATURE_ALIAS}1\" >> /etc/hosts\r"
+expect "]# "
+send -- "service $SERVICE_NAME start\r"
+expect "]# "
+send -- "exit\r"
+expect "]$ "
+send -- "exit\r"
+EOFFEATURE
+    if [ $? -ne 0 ]; then
+        print_log_msg "Expect commands did not execute successfully when deploying $RPM_FILE onto $kvm_name Service Group"
+    else
+        print_log_msg "$RPM_FILE deployed successfully on $kvm_name Service Group"
+    fi
+}
+
+update_all_esn_hosts_files() {
+    kvm_name="$KVM_NAME"
+    
+    feature_ip=$(grep -e [[:space:]]$CLUSTER_NAME-$kvm_name[[:space:]] /etc/hosts | awk {'print $1'})
+
+    if [ -z  $feature_ip ]; then
+        print_log_msg "Could not find an IP address for $CLUSTER_NAME-$kvm_name"
+        print_log_msg "TAF will not run if there no entries for $FEATURE_ALIAS duplicating to $CLUSTER_NAME-$kvm_name"
+        exit 12
+    fi
+
+    # Loop through the SVC's and add a hosts entry for $FEATURE_ALIAS
+   
+    grep $FEATURE_ALIAS /etc/hosts >> /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        print_log_msg "Updating MS-1 /etc/hosts file for $FEATURE_ALIAS"
+        echo "$feature_ip   $CLUSTER_NAME-${FEATURE_ALIAS}1" >> /etc/hosts
+    else
+        print_log_msg "MS-1 /etc/hosts file already contains an entry for $FEATURE_ALIAS"
+    fi
+
+    print_log_msg "Updating CLUSTER_NAME /etc/hosts file"
+expect <<EOFHOSTS
+set timeout -1
+spawn \$env(SHELL)
+match_max 100000
+send -- "ssh $SVC_USER@$CLUSTER_NAME\r"
+expect "Are you sure you want to continue connecting (yes/no)? "
+send -- "yes\r"
+expect "password: "
+send -- "$SVC_PWD\r"
+expect "]$ "
+send -- "su - root\r"
+expect "Password: "
+send -- "$SVC_PWD\r"
+expect "]# "
+send -- "echo \"$feature_ip $FEATURE_ALIAS\" >> /etc/hosts\r"
+expect "]# "
+send -- "exit\r"
+expect "]$ "
+send -- "exit\r"
+EOFHOSTS
+        if [ $? -ne 0 ]; then
+            print_log_msg "Expect commands did not execute successfully when updating $CLUSTER_NAME /etc/hosts file"
+        else
+            print_log_msg "Successfully updated /etc/hosts file on $CLUSTER_NAME"
+        fi
+}
+
+################################################################################################
+# Assume rpms have been added to /var/www/html/ENM_services directory, then recreate the repo
+################################################################################################
+recreate_services_repo(){
+    print_log_msg "Recreating the ENM_Services repo (/var/www/html/ENM_services)"
+    /usr/bin/createrepo /var/www/html/ENM_services/ >> /dev/null 2>&1
+}
+
+reset_kvm(){
+    kvm_name=$1
+    print_log_msg "Resetting $kvm_name Service Group KVM"
+expect <<EOFRESET_KVM
+set timeout -1
+spawn \$env(SHELL)
+match_max 100000
+send -- "ssh -i /root/.ssh/vm_private_key $SVC_USER@$CLUSTER_NAME\r"
+expect "Are you sure you want to continue connecting (yes/no)? "
+send -- "yes\r"
+expect "password: "
+send -- "$SVC_PWD\r"
+expect "]$ "
+send -- "su - root\r"
+expect "Password: "
+send -- "$SVC_PWD\r"
+expect "]# "
+send -- "hagrp -offline Grp_CS_svc_cluster_$kvm_name -sys cloud-$CLUSTER_NAME\r"
+expect "]# "
+send -- "virsh undefine $kvm_name\r"
+expect "]# "
+send -- "virsh destroy $kvm_name\r"
+expect "]# "
+send -- "hagrp -online Grp_CS_svc_cluster_$kvm_name -sys cloud-$CLUSTER_NAME\r"
+expect "]# "
+send -- "exit\r"
+expect "]$ "
+send -- "exit\r"
+EOFRESET_KVM
+
+    if [ $? -ne 0 ]; then
+        print_log_msg "Expect commands did not execute successfully when resetting the $kvm_name Service Group"
+    else
+        print_log_msg "Successfully reset the $kvm_name Service Group"
+    fi
+}
+
+list_kvms(){
+    clusterName=$CLUSTER_NAME
+    
+    print_log_msg "Printing KVM list on $clusterName"
+expect <<EOFLIST_KVMS
+set timeout -1
+spawn \$env(SHELL)
+match_max 100000
+send -- "ssh $SVC_USER@$clusterName\r"
+expect "Are you sure you want to continue connecting (yes/no)? "
+send -- "yes\r"
+expect "password: "
+send -- "$SVC_PWD\r"
+expect "]$ "
+send -- "su - root\r"
+expect "Password: "
+send -- "$SVC_PWD\r"
+expect "]# "
+send -- "virsh list\r"
+expect "]# "
+send -- "exit\r"
+expect "]$ "
+send -- "exit\r"
+EOFLIST_KVMS
+
+    if [ $? -ne 0 ]; then
+        print_log_msg "Expect commands did not execute successfully when checking the KVM's on $clusterName"
+    else
+        print_log_msg "Successfully printed KVM's for $clusterName"
+    fi 
+}
+
+list_ericsson_packages_on_kvm(){
+    kvm_name="$KVM_NAME"
+    
+    print_log_msg "Listing Ericsson Packages on $kvm_name KVM"
+expect <<EOFLIST_PACKAGES
+set timeout -1
+spawn \$env(SHELL)
+match_max 100000
+send -- "ssh -i /root/.ssh/vm_private_key cloud-user@$CLUSTER_NAME-$kvm_name\r"
+expect "Are you sure you want to continue connecting (yes/no)? "
+send -- "yes\r"
+send -- "su - root\r"
+expect "Password: "
+send -- "$KVM_PWD\r"
+expect "]# "
+send -- "yum list installed | grep ERIC\r"
+expect "]# "
+send -- "exit\r"
+expect "]$ "
+send -- "exit\r"
+EOFLIST_PACKAGES
+    if [ $? -ne 0 ]; then
+        print_log_msg "Expect commands did not execute successfully when listing the Ericsson packages on the $kvm_name KVM"
+    else
+        print_log_msg "Listed the Ericsson packages on the $kvm_name KVM"
+    fi
+}
+
+check_kvm_online() {
+    kvm_name=$1
+    print_log_msg "Waiting for $kvm_name to online"
+expect <<EOFWATCH_KVM
+set timeout -1
+spawn \$env(SHELL)
+match_max 100000
+send -- "ssh $SVC_USER@$CLUSTER_NAME\r"
+expect "Are you sure you want to continue connecting (yes/no)? "
+send -- "yes\r"
+expect "password: "
+send -- "$SVC_PWD\r"
+expect "]$ "
+send -- "su - root\r"
+expect "Password: "
+send -- "$SVC_PWD\r"
+expect "]# "
+send -- "watch -n 1 \"date; virsh list | grep $kvm_name | wc -l; ssh -i /root/.ssh/vm_private_key cloud-user@$CLUSTER_NAME-$kvm_name\"\r"
+expect "]# "
+send -- "exit\r"
+expect "]$ "
+send -- "exit\r"
+EOFWATCH_KVM
+
+    if [ $? -ne 0 ]; then
+        print_log_msg "Expect commands did not execute successfully when updating $svc_server /etc/hosts file"
+    else
+        print_log_msg "Successfully updated /etc/hosts file on $svc_server"
+    fi
+}
+
+set_kvm_ipaddress(){
+    IP_ADDRESS=$(cat /etc/hosts | grep $KVM_NAME | awk '{print $1}')
+    
+    check_ipaddress_exists
+}
+
+check_ipaddress_exists(){
+    if [ -z "$IP_ADDRESS" ]
+    then
+        echo "$KVM_NAME either doesn't exist or has not been set up in /etc/hosts"
+        exit 200
+    fi    
+}
+
+deploy_rpm(){    
+    deploy_rpm_on_jboss_kvm   
+}
+
+run_deploy(){
+    recreate_services_repo
+    deploy_rpm
+    update_all_esn_hosts_files
+}
+
+#####################################
+############### main ################
+#####################################
+
+process_arguments $@
+remove_known_hosts
+
+if [ ! -z $LIST_KVMS ]
+then
+    list_kvms
+    if [ ! -z "$KVM_NAME" ]
+    then
+        list_ericsson_packages_on_kvm
+    fi
+    exit 0
+fi
+
+if [ ! -z $DEPLOY ]
+then
+    run_deploy
+    exit 0
+fi
+
+if [ ! -z $RESET ]
+then
+    reset_kvm $KVM_NAME
+    exit 0
+fi
+
+if [ ! -z $WATCH ]
+then
+    check_kvm_online $KVM_NAME
+    exit 0
+fi
